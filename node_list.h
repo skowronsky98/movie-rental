@@ -5,14 +5,16 @@
 #ifndef PPPROJEKT_NODE_LIST_H
 #define PPPROJEKT_NODE_LIST_H
 
-struct sll_node;
+#include "file_clients.h"
 
-struct sll_node *create_list(int card, char name[], char surname[], int phone, char mail[]);
-struct sll_node *insert_node(struct sll_node *front, int card, char name[], char surname[], int phone, char mail[]);
-struct sll_node *delete_node(struct sll_node *front, int card);
-void print_list(struct sll_node *front);
-void remove_list(struct sll_node **front);
+extern struct list_node;
 
+extern struct list_node *create_list(struct klienci);
+extern struct list_node *add_node(struct list_node*,struct klienci);
+extern struct list_node *delete_node(struct list_node*, char);
+extern void print_list(struct list_node*);
+extern void remove_list(struct list_node**);
 
+//char card, char name[], char surname[], char phone, char mail[]
 
 #endif //PPPROJEKT_NODE_LIST_H

@@ -6,11 +6,23 @@
 #include "file_clients.h"
 #include "movies.h"
 
+
+
+
 int main()
 {
+    struct klienci k,m;
+    k.numer_karty = 3;
+    strcpy( k.imie, "Sara" );
+    strcpy( k.nazwisko, "Sara" );
+    k.numer_telefonu = 1234;
+    strcpy( k.email, "Sara@" );
 
-   /* struct sll_node *front = create_list(10,"elo","siema",1234,"co@tam");
-    print_list(front);*/
+
+
+
+    struct list_node *list = create_list(k);
+
 
     struct klienci d[10];
     struct filmy f[10];
@@ -47,7 +59,8 @@ int main()
             break;
         case 4:
             fseek(plik1,0,SEEK_SET);
-            readDataKlienci(plik1);
+            readDataKlienci(plik1,&list);
+            print_list(list);
             break;
         case 5:
             addMovie(&f[0]);
@@ -63,6 +76,7 @@ int main()
             break;
     }
 
+    remove_list(&list);
     fclose(plik1);
     fclose(plik2);
 

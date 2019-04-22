@@ -5,143 +5,136 @@
 #include <stdio.h>
 #include <string.h>
 #include "node_list.h"
+#include "file_clients.h"
 
-struct sll_node
-{
+struct list_node {
     int numer_karty;
     char imie[27];
     char nazwisko[27];
     int numer_telefonu;
     char email[50];
-    struct sll_node *next;
+    struct list_node *next;
 };
 
-struct sll_node *create_list(int card, char name[], char surname[], int phone, char mail[])
+struct list_node *create_list(struct klienci client)
 {
-    struct sll_node *front = (struct sll_node *)
-            malloc(sizeof(struct sll_node));
-    if (NULL != front)
-    {
-        front->numer_karty = card;
-        strcpy(front->imie,name);
-        strcpy(front->nazwisko,surname);
-        front->numer_telefonu = phone;
-        strcpy(front->email,mail);
-        front->next = NULL;
+    struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
+
+    if(first) {
+        first->numer_karty = client.numer_karty;
+        strcpy(first->imie,client.imie);
+        strcpy(first->nazwisko,client.nazwisko);
+        first->numer_telefonu = client.numer_telefonu;
+        strcpy(first->email,client.email);
+        first->next = NULL;
     }
-    return front;
+    return first;
 }
 
-struct sll_node *insert_front(struct sll_node *front, struct sll_node *new_node)
+struct list_node *add_at_front(struct list_node *list_pointer, struct list_node *new_node)
 {
-    new_node->next = front;
+    new_node->next = list_pointer;
     return new_node;
 }
 
-struct sll_node *find_spot(struct sll_node *front, int card)
+struct list_node *find_spot(struct list_node *list_pointer, char card)
 {
-    struct sll_node *prev = NULL;
-    while ((NULL != front) && (front->numer_karty > card))
-    {
-        prev = front;
-        front = front->next;
+    struct list_node *previous = NULL;
+
+    while(list_pointer && list_pointer->numer_karty<card) {
+        previous = list_pointer;
+        list_pointer = list_pointer->next;
     }
-    return prev;
+    return previous;
 }
 
-void insert_after(struct sll_node *node, struct sll_node *new_node)
+void add_in_middle_or_at_back(struct list_node *node, struct list_node *new_node)
 {
     new_node->next = node->next;
     node->next = new_node;
 }
 
-void insert_back(struct sll_node *back, struct sll_node *new_node)
+struct list_node *add_node(struct list_node *list_pointer, struct klienci client)
 {
-    back->next = new_node;
-}
+    struct list_node *new_node = (struct list_node *) malloc(sizeof(struct list_node));
 
-struct sll_node *insert_node(struct sll_node *front, int card, char name[], char surname[], int phone, char mail[])
-{
-    if (NULL == front)
-        return NULL;
+    if(list_pointer && new_node) {
+        new_node->numer_karty = client.numer_karty;
+        strcpy(new_node->imie,client.imie);
+        strcpy(new_node->nazwisko,client.nazwisko);
+        new_node->numer_telefonu = client.numer_telefonu;
+        strcpy(new_node->email,client.email);
 
-    struct sll_node *new_node = (struct sll_node *) malloc(sizeof(struct sll_node));
-    if (NULL != new_node)
-    {
-        front->numer_karty = card;
-        strcpy(front->imie,name);
-        strcpy(front->nazwisko,surname);
-        front->numer_telefonu = phone;
-        strcpy(front->email,mail);
-        new_node->next = NULL;
-        if (front->numer_karty <= card)
-            return insert_front(front, new_node);
-        else
-        {
-            struct sll_node *node = find_spot(front, card);
-            if (NULL != node->next)
-                insert_after(node, new_node);
-            else
-                insert_back(node, new_node);
+        if(list_pointer->numer_karty>=client.numer_karty) {
+            return add_at_front(list_pointer, new_node);
+        }
+        else {
+            struct list_node *node= find_spot(list_pointer,client.numer_karty);
+            add_in_middle_or_at_back(node,new_node);
         }
     }
-    return front;
+
+    return list_pointer;
 }
 
-struct sll_node *delete_front(struct sll_node *front)
+struct list_node *delete_at_front(struct list_node *list_pointer)
 {
-    struct sll_node *next = front->next;
-    free(front);
+    struct list_node *next = list_pointer->next;
+    free(list_pointer);
     return next;
 }
 
-struct sll_node *find_prev_node(struct sll_node *front, int card)
+struct list_node *find_previous_node (struct list_node *list_pointer, char card)
 {
-    struct sll_node *prev = NULL;
-    while ((NULL != front) && (front->numer_karty != card))
-    {
-        prev = front;
-        front = front->next;
+    struct list_node *previous = NULL;
+    while(list_pointer && list_pointer->numer_karty!=card) {
+        previous=list_pointer;
+        list_pointer=list_pointer->next;
     }
-    return prev;
+    return previous;
 }
 
-void delete_after(struct sll_node *node)
+void delete_middle_or_last_node(struct list_node *previous)
 {
-    struct sll_node *next = node->next;
-    if (NULL != next)
-    {
-        node->next = next->next;
-        free(next);
+    struct list_node *node = previous->next;
+    if(node) {
+        previous->next = node->next;
+        free(node);
     }
 }
 
-struct sll_node *delete_node(struct sll_node *front, int card)
+struct list_node *delete_node(struct list_node *list_pointer, char card)
 {
-    if (NULL == front)
-        return NULL;
-
-    if (front->numer_karty == card)
-        return delete_front(front);
-
-    struct sll_node *prev = find_prev_node(front, card);
-    delete_after(prev);
-    return front;
+    if(list_pointer) {
+        if(list_pointer->numer_karty==card)
+            return delete_at_front(list_pointer);
+        else {
+            struct list_node *previous = find_previous_node(list_pointer,card);
+            delete_middle_or_last_node(previous);
+        }
+    }
+    return list_pointer;
 }
 
-void print_list(struct sll_node *front)
+void print_list(struct list_node *list_pointer)
 {
-    for (; NULL != front; front = front->next)
-        printf("nr. karty: %d | imie: %s | nazwisko: %s | nr. tel: %d | email: %s",front->numer_karty,front->imie,front->nazwisko,front->numer_telefonu,front->email);
-    printf("\n");
+    while(list_pointer) {
+        printf("nr. karty: %d | imie: %s | nazwisko: %s | nr. tel: %d | email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
+        list_pointer=list_pointer->next;
+    }
+    puts("");
 }
 
-void remove_list(struct sll_node **front)
+
+void remove_list(struct list_node **list_pointer)
 {
-    while (NULL != *front)
-    {
-        struct sll_node *next = (*front)->next;
-        free(*front);
-        *front = next;
+    while(*list_pointer) {
+        struct list_node *next = (*list_pointer)->next;
+        free(*list_pointer);
+        *list_pointer = next;
     }
 }
+
+
+
+

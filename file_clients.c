@@ -6,6 +6,8 @@
 #include <string.h>
 
 #include "file_clients.h"
+#include "node_list.h"
+#include "node_list.c"
 
 /*struct klienci {
     int numer_karty;
@@ -37,15 +39,26 @@ void saveDataKlienci(struct klienci *d,FILE *file){
     fprintf(file,"%s\n",d->email);
 }
 
-void readDataKlienci(FILE *file){
+void readDataKlienci(FILE *file, struct list_node **list){
     char tab[100];
     printf("Odczyt danych:\n");
-    int i=1;
     while(!feof(file))
     {
         fgets(tab,100,file);
-        i++;
         printf("%s\n",tab);
         memset(tab,0,100);
     }
+
+    struct klienci m;
+    m.numer_karty = 1;
+    strcpy( m.imie, "Sara" );
+    strcpy( m.nazwisko, "Sara" );
+    m.numer_telefonu = 1234;
+    strcpy( m.email, "Sara@" );
+
+    //*list = add_node(*list,m);
+
 }
+
+
+

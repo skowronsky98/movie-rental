@@ -5,7 +5,9 @@
 #ifndef PPPROJEKT_FILE_CLIENTS_H
 #define PPPROJEKT_FILE_CLIENTS_H
 
-struct klienci {
+#include "node_list.h"
+
+extern struct klienci {
     int numer_karty;
     char imie[27];
     char nazwisko[27];
@@ -15,7 +17,7 @@ struct klienci {
 
 void addClient(struct klienci *d);
 void saveDataKlienci(struct klienci *d,FILE *file);
-void readDataKlienci(FILE *file);
+void readDataKlienci(FILE *file, struct list_node**);
 
 
 #endif //PPPROJEKT_FILE_CLIENTS_H
