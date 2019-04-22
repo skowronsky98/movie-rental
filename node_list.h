@@ -40,12 +40,13 @@ extern void print_list_movie(struct list_node_movie*);
 extern void remove_list_movie(struct list_node_movie**);
 
 
+
 void readDataKlienci(FILE *file, struct list_node**);
 void addClient(FILE *,struct list_node **);
 void saveDataKlienci(struct klienci,FILE *file,struct list_node **);
 
-void addMovie(struct filmy *d);
-void saveDataFilmy (struct filmy *d,FILE *file);
-void readDataFilmy (FILE *file);
+void addMovie(FILE *, struct list_node_movie **);
+void saveDataFilmy (struct filmy ,FILE *file, struct list_node_movie **);
+void readDataFilmy (FILE *file,struct list_node_movie**);
 
 #endif //PPPROJEKT_NODE_LIST_H

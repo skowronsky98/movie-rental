@@ -26,13 +26,10 @@ int main()
     struct list_node *list = create_list(k);
     readDataKlienci(file_klienci,&list);
 
-
-
+    FILE *file_filmy;
     struct list_node_movie *list_movie = create_list_movie(f);
+    readDataFilmy(file_filmy,&list_movie);
 
-
-    FILE *plik2;
-    plik2 = fopen("filmy.txt","a+");
 
     int operacja;
 
@@ -65,16 +62,14 @@ int main()
                 print_list(list);
                 break;
             case 5:
-                //addMovie(&f[0]);
-                saveDataFilmy(&f, plik2);
+                addMovie(file_filmy,&list_movie);
                 break;
             case 6:
                 //cos
             case 7:
                 //cos
             case 8:
-                fseek(plik2, 0, SEEK_SET);
-                readDataFilmy(plik2);
+                print_list_movie(list_movie);
                 break;
 
         }
@@ -82,7 +77,6 @@ int main()
     }
     remove_list(&list);
     remove_list_movie(&list_movie);
-    fclose(plik2);
 
     return 0;
 }
