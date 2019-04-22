@@ -70,6 +70,10 @@ int main()
             fseek(plik2,0,SEEK_SET);
             readDataFilmy(plik2);
             break;
+
+        default:
+            printf("Niepoprawny wybor");
+            break;
     }
 
     remove_list(&list);
