@@ -84,7 +84,7 @@ struct list_node *delete_at_front(struct list_node *list_pointer)
     return next;
 }
 
-struct list_node *find_previous_node (struct list_node *list_pointer, char card)
+struct list_node *find_previous_node (struct list_node *list_pointer, int card)
 {
     struct list_node *previous = NULL;
     while(list_pointer && list_pointer->numer_karty!=card) {
@@ -103,7 +103,7 @@ void delete_middle_or_last_node(struct list_node *previous)
     }
 }
 
-struct list_node *delete_node(struct list_node *list_pointer, char card)
+struct list_node *delete_node(struct list_node *list_pointer, int card)
 {
     if(list_pointer) {
         if(list_pointer->numer_karty==card)

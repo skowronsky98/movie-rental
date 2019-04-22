@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "node_list.h"
-#include "movies.h"
 
 int main()
 {
@@ -14,14 +13,26 @@ int main()
     k.numer_telefonu = 0;
     strcpy( k.email, "@" );
 
+    struct filmy f;
+    f.id_filmu = 0;
+    strcpy( f.tytul, "tytul" );
+    f.rok = 0;
+    strcpy( f.rezyser, "rez" );
+    strcpy( f.gatunek, "gat" );
+    f.liczba_egzemplarzy= 0;
+    f.liczba_wypozyczonych= 0;
+
     FILE *file_klienci;
     struct list_node *list = create_list(k);
     readDataKlienci(file_klienci,&list);
 
+
+
+    struct list_node_movie *list_movie = create_list_movie(f);
+
+
     FILE *plik2;
     plik2 = fopen("filmy.txt","a+");
-    struct filmy f[10];
-
 
     int operacja;
 
@@ -54,7 +65,7 @@ int main()
                 print_list(list);
                 break;
             case 5:
-                addMovie(&f[0]);
+                //addMovie(&f[0]);
                 saveDataFilmy(&f, plik2);
                 break;
             case 6:
@@ -70,6 +81,7 @@ int main()
 
     }
     remove_list(&list);
+    remove_list_movie(&list_movie);
     fclose(plik2);
 
     return 0;

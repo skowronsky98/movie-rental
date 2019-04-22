@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "movies.h"
+#include "node_list.h"
+
 
 void addMovie(struct filmy *d){
     printf("Podaj id filmu: ");
