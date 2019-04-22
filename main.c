@@ -3,15 +3,11 @@
 #include <string.h>
 
 #include "node_list.h"
-#include "file_clients.h"
 #include "movies.h"
-
-
-
 
 int main()
 {
-    struct klienci k,m;
+    struct klienci k;
     k.numer_karty = 3;
     strcpy( k.imie, "Sara" );
     strcpy( k.nazwisko, "Sara" );

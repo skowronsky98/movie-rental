@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "file_clients.h"
 #include "node_list.h"
+
 
 /*struct klienci {
     int numer_karty;
@@ -55,7 +55,7 @@ void readDataKlienci(FILE *file, struct list_node **list){
     m.numer_telefonu = 1234;
     strcpy( m.email, "Sara@" );
 
-    //*list = add_node(*list,m);
+    *list = add_node(*list,m);
 
 }
 

@@ -5,7 +5,16 @@
 #ifndef PPPROJEKT_NODE_LIST_H
 #define PPPROJEKT_NODE_LIST_H
 
-#include "file_clients.h"
+struct klienci {
+    int numer_karty;
+    char imie[27];
+    char nazwisko[27];
+    int numer_telefonu;
+    char email[50];
+};
+
+void addClient(struct klienci *d);
+void saveDataKlienci(struct klienci *d,FILE *file);
 
 extern struct list_node;
 
@@ -15,6 +24,8 @@ extern struct list_node *delete_node(struct list_node*, char);
 extern void print_list(struct list_node*);
 extern void remove_list(struct list_node**);
 
-//char card, char name[], char surname[], char phone, char mail[]
+
+void readDataKlienci(FILE *file, struct list_node**);
+
 
 #endif //PPPROJEKT_NODE_LIST_H

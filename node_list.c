@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "node_list.h"
-#include "file_clients.h"
 
 struct list_node {
     int numer_karty;
@@ -124,7 +124,6 @@ void print_list(struct list_node *list_pointer)
     }
     puts("");
 }
-
 
 void remove_list(struct list_node **list_pointer)
 {
