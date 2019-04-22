@@ -7,7 +7,6 @@
 
 #include "file_clients.h"
 #include "node_list.h"
-#include "node_list.c"
 
 /*struct klienci {
     int numer_karty;

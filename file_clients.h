@@ -7,7 +7,7 @@
 
 #include "node_list.h"
 
-extern struct klienci {
+struct klienci {
     int numer_karty;
     char imie[27];
     char nazwisko[27];
