@@ -25,8 +25,7 @@ int main()
 
     int operacja;
 
-    char exit;
-    do {
+    while(operacja != 0) {
         printf("Spis tresci:\n");
         printf("1. Dodaj Klienta\n");
         printf("2. Usun Klienta\n");
@@ -36,11 +35,10 @@ int main()
         printf("6. Usun film\n");
         printf("7. Edytuj film\n");
         printf("8. Wypisz liste filmow\n");
-        printf("q - Koniec programu\n\n");
+        printf("0 - Koniec programu\n\n");
         printf("Wybor: ");
         scanf("%d", &operacja);
 
-        exit = getchar();
         switch (operacja) {
 
             case 1:
@@ -70,8 +68,7 @@ int main()
 
         }
 
-    } while(exit != 'q');
-
+    }
     remove_list(&list);
     fclose(plik2);
 
