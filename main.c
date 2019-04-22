@@ -29,52 +29,55 @@ int main()
     FILE *plik2;
     plik2 = fopen("filmy.txt","a+");
 
-    printf("Spis tresci:\n");
-    printf("1. Dodaj Klienta\n");
-    printf("2. Usun Klienta\n");
-    printf("3. Edytuj Klienta\n");
-    printf("4. Wypisz liste klientow\n\n");
-    printf("5. Dodaj film\n");
-    printf("6. Usun film\n");
-    printf("7. Edytuj film\n");
-    printf("8. Wypisz liste filmow\n\n");
-    printf("Wybor: ");
-    scanf("%d",&operacja);
+    char exit;
+    do {
+        printf("Spis tresci:\n");
+        printf("1. Dodaj Klienta\n");
+        printf("2. Usun Klienta\n");
+        printf("3. Edytuj Klienta\n");
+        printf("4. Wypisz liste klientow\n\n");
+        printf("5. Dodaj film\n");
+        printf("6. Usun film\n");
+        printf("7. Edytuj film\n");
+        printf("8. Wypisz liste filmow\n");
+        printf("q - Koniec programu\n\n");
+        printf("Wybor: ");
+        scanf("%d", &operacja);
 
-    switch (operacja){
+        exit = getchar();
+        switch (operacja) {
 
-        case 1:
-            addClient(&d[0]);
-            saveDataKlienci(&d,plik1);
-            break;
-        case 2:
-            // cos
-            break;
-        case 3:
-            //cos
-            break;
-        case 4:
-            fseek(plik1,0,SEEK_SET);
-            readDataKlienci(plik1,&list);
-            print_list(list);
-            break;
-        case 5:
-            addMovie(&f[0]);
-            saveDataFilmy(&f,plik2);
-            break;
-        case 6:
-            //cos
-        case 7:
-            //cos
-        case 8:
-            fseek(plik2,0,SEEK_SET);
-            readDataFilmy(plik2);
-            break;
+            case 1:
+                addClient(&d[0]);
+                saveDataKlienci(&d, plik1);
+                break;
+            case 2:
+                // cos
+                break;
+            case 3:
+                //cos
+                break;
+            case 4:
+                fseek(plik1, 0, SEEK_SET);
+                readDataKlienci(plik1, &list);
+                print_list(list);
+                break;
+            case 5:
+                addMovie(&f[0]);
+                saveDataFilmy(&f, plik2);
+                break;
+            case 6:
+                //cos
+            case 7:
+                //cos
+            case 8:
+                fseek(plik2, 0, SEEK_SET);
+                readDataFilmy(plik2);
+                break;
 
-        default:
-            printf("Niepoprawny wybor");
-            break;
-    }
+        }
+
+    } while(exit != 'q');
 
     remove_list(&list);
     fclose(plik1);
