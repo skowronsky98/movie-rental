@@ -13,9 +13,6 @@ struct klienci {
     char email[50];
 };
 
-void addClient(struct klienci *d);
-void saveDataKlienci(struct klienci *d,FILE *file);
-
 extern struct list_node;
 
 extern struct list_node *create_list(struct klienci);
@@ -26,6 +23,8 @@ extern void remove_list(struct list_node**);
 
 
 void readDataKlienci(FILE *file, struct list_node**);
+void addClient(FILE *,struct list_node **);
+void saveDataKlienci(struct klienci,FILE *file,struct list_node **);
 
 
 #endif //PPPROJEKT_NODE_LIST_H

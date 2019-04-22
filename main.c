@@ -8,26 +8,22 @@
 int main()
 {
     struct klienci k;
-    k.numer_karty = 3;
-    strcpy( k.imie, "Sara" );
-    strcpy( k.nazwisko, "Sara" );
-    k.numer_telefonu = 1234;
-    strcpy( k.email, "Sara@" );
+    k.numer_karty = 0;
+    strcpy( k.imie, "imie" );
+    strcpy( k.nazwisko, "nazwisko" );
+    k.numer_telefonu = 0;
+    strcpy( k.email, "@" );
 
-
-
-
+    FILE *file_klienci;
     struct list_node *list = create_list(k);
+    readDataKlienci(file_klienci,&list);
 
-
-    struct klienci d[10];
-    struct filmy f[10];
-    int operacja;
-
-    FILE *plik1;
-    plik1 = fopen("klienci.txt","a+");
     FILE *plik2;
     plik2 = fopen("filmy.txt","a+");
+    struct filmy f[10];
+
+
+    int operacja;
 
     char exit;
     do {
@@ -48,8 +44,7 @@ int main()
         switch (operacja) {
 
             case 1:
-                addClient(&d[0]);
-                saveDataKlienci(&d, plik1);
+                addClient(file_klienci, &list);
                 break;
             case 2:
                 // cos
@@ -58,8 +53,6 @@ int main()
                 //cos
                 break;
             case 4:
-                fseek(plik1, 0, SEEK_SET);
-                readDataKlienci(plik1, &list);
                 print_list(list);
                 break;
             case 5:
@@ -80,7 +73,6 @@ int main()
     } while(exit != 'q');
 
     remove_list(&list);
-    fclose(plik1);
     fclose(plik2);
 
     return 0;

@@ -7,55 +7,66 @@
 
 #include "node_list.h"
 
+void addClient(FILE *file, struct list_node **list){
 
-/*struct klienci {
-    int numer_karty;
-    char imie[27];
-    char nazwisko[27];
-    int numer_telefonu;
-    char email[50];
-};*/
-
-void addClient(struct klienci *d){
+    struct klienci d;
     printf("Podaj numer karty: ");
-    scanf("%d",&d->numer_karty);
+    scanf("%d",&d.numer_karty);
     printf("Podaj imie: ");
-    scanf("%s",d->imie);
+    scanf("%s",d.imie);
     printf("Podaj nazwisko: ");
-    scanf("%s",d->nazwisko);
+    scanf("%s",d.nazwisko);
     printf("Podaj numer telefonu: ");
-    scanf("%d",&d->numer_telefonu);
+    scanf("%d",&d.numer_telefonu);
     printf("Podaj email: ");
-    scanf("%s",d->email);
+    scanf("%s",d.email);
 
+    saveDataKlienci(d,file,list);
 }
 
-void saveDataKlienci(struct klienci *d,FILE *file){
-    fprintf(file,"%d|",d->numer_karty);
-    fprintf(file,"%s|",d->imie);
-    fprintf(file,"%s|",d->nazwisko);
-    fprintf(file,"%d|",d->numer_telefonu);
-    fprintf(file,"%s\n",d->email);
+void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
+
+    file = fopen("klienci.dat","a+");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "\nError opend file\n");
+        exit (1);
+    }
+    // write struct to file
+    fwrite (&d, sizeof(struct klienci), 1, file);
+    // add element to list
+    *list = add_node(*list,d);
+
+    if(fwrite != 0)
+        printf("contents to file written successfully !\n");
+    else
+        printf("error writing file !\n");
+
+    // close file
+    fclose (file);
 }
 
 void readDataKlienci(FILE *file, struct list_node **list){
-    char tab[100];
-    printf("Odczyt danych:\n");
-    while(!feof(file))
+
+    struct klienci k;
+    file = fopen ("klienci.dat", "r");
+
+    if (file == NULL)
     {
-        fgets(tab,100,file);
-        printf("%s\n",tab);
-        memset(tab,0,100);
+        fprintf(stderr, "\nError opening file\n");
+        exit (1);
     }
 
-    struct klienci m;
-    m.numer_karty = 1;
-    strcpy( m.imie, "Sara" );
-    strcpy( m.nazwisko, "Sara" );
-    m.numer_telefonu = 1234;
-    strcpy( m.email, "Sara@" );
+    // read file contents till end of file
+    while(fread(&k, sizeof(struct klienci), 1, file))
+    {
+        *list = add_node(*list,k);
+    }
+    // close file
+    fclose (file);
 
-    *list = add_node(*list,m);
+    // *list = add_node(*list,m);
 
 }
 
