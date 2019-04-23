@@ -83,7 +83,7 @@ void deleteFilmy(FILE *file,struct list_node_movie **list){
     int id_num=0;
     printf("\nPodaj numer filmu do usuniecia: ");
     scanf("%d",&id_num);
-    delete_node_movie(*list,id_num);
+    *list = delete_node_movie(*list,id_num);
     overwriteFilmy(file,list);
 }
 

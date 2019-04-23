@@ -13,8 +13,6 @@ struct klienci {
     char email[50];
 };
 
-
-
 struct list_node;
 
 extern struct list_node *create_list(struct klienci);

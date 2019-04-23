@@ -79,7 +79,7 @@ void deleteKlienci(FILE *file,struct list_node **list){
     int id_num=0;
     printf("\nPodaj numer karty klienta do usuniecia: ");
     scanf("%d",&id_num);
-    delete_node(*list,id_num);
+    *list = delete_node(*list,id_num);
     overwriteKlienci(file,list);
 }
 
