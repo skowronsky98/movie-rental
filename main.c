@@ -6,30 +6,13 @@
 
 int main()
 {
-    struct klienci k;
-    k.numer_karty = 0;
-    strcpy( k.imie, "imie" );
-    strcpy( k.nazwisko, "nazwisko" );
-    k.numer_telefonu = 0;
-    strcpy( k.email, "@" );
-
-    struct filmy f;
-    f.id_filmu = 0;
-    strcpy( f.tytul, "tytul" );
-    f.rok = 0;
-    strcpy( f.rezyser, "rez" );
-    strcpy( f.gatunek, "gat" );
-    f.liczba_egzemplarzy= 0;
-    f.liczba_wypozyczonych= 0;
-
     FILE *file_klienci;
-    struct list_node *list = create_list(k);
+    struct list_node *list = NULL;
     readDataKlienci(file_klienci,&list);
 
     FILE *file_filmy;
-    struct list_node_movie *list_movie = create_list_movie(f);
+    struct list_node_movie *list_movie = NULL;
     readDataFilmy(file_filmy,&list_movie);
-
 
     int operacja;
 
@@ -53,7 +36,7 @@ int main()
                 addClient(file_klienci, &list);
                 break;
             case 2:
-                deleteKlienci(k,file_klienci,&list);
+                deleteKlienci(file_klienci,&list);
                 break;
             case 3:
                 //cos
@@ -65,7 +48,7 @@ int main()
                 addMovie(file_filmy,&list_movie);
                 break;
             case 6:
-                deleteFilmy(f, file_filmy,&list_movie);
+                deleteFilmy(file_filmy,&list_movie);
                 break;
             case 7:
                 //cos

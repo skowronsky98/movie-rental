@@ -7,6 +7,31 @@
 
 #include "node_list.h"
 
+void saveDataFilmy(struct filmy d, FILE *file, struct list_node_movie **list){
+
+    file = fopen("filmy.dat","a+");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "\nError opend file\n");
+        exit (1);
+    }
+    // write struct to file
+    fwrite (&d, sizeof(struct filmy), 1, file);
+    // add element to list
+    if(*list == NULL)
+        *list = create_list_movie(d);
+    else
+        *list = add_node_movie(*list,d);
+
+    if(fwrite != 0)
+        printf("contents to file written successfully !\n");
+    else
+        printf("error writing file !\n");
+
+    // close file
+    fclose (file);
+}
 
 void addMovie(FILE *file, struct list_node_movie **list){
 
@@ -29,48 +54,19 @@ void addMovie(FILE *file, struct list_node_movie **list){
     saveDataFilmy(d,file,list);
 }
 
-void saveDataFilmy(struct filmy d, FILE *file, struct list_node_movie **list){
+void overwriteFilmy(FILE *file, struct list_node_movie **list){
 
+    int status = remove("filmy.dat");
     file = fopen("filmy.dat","a+");
 
-    if (file == NULL)
-    {
-        fprintf(stderr, "\nError opend file\n");
-        exit (1);
-    }
-    // write struct to file
-    fwrite (&d, sizeof(struct filmy), 1, file);
-    // add element to list
-    *list = add_node_movie(*list,d);
-
-    if(fwrite != 0)
-        printf("contents to file written successfully !\n");
-    else
-        printf("error writing file !\n");
-
-    // close file
-    fclose (file);
-}
-
-void deleteFilmy(struct filmy f,FILE *file,struct list_node_movie **list){
-
-    int id_num=0;
-    printf("\nPodaj numer filmu do usuniecia: ");
-    scanf("%d",&id_num);
-    delete_node_movie(*list,id_num);
-    overwriteFilmy(f,file,list);
-}
-void overwriteFilmy(struct filmy f,FILE *file, struct list_node_movie **list){
-
-    file = fopen("filmy.dat","w");
 
     if (file == NULL)
     {
         fprintf(stderr, "\nError opend file\n");
         exit (1);
     }
-    // overwrite struct to file
-    fwrite (&f, sizeof(struct filmy), 1, file);
+
+    add_list_movie_to_file(file,*list);
 
     if(fwrite != 0)
         printf("contents to file overwritten successfully !\n");
@@ -79,6 +75,16 @@ void overwriteFilmy(struct filmy f,FILE *file, struct list_node_movie **list){
 
     // close file
     fclose (file);
+}
+
+
+void deleteFilmy(FILE *file,struct list_node_movie **list){
+
+    int id_num=0;
+    printf("\nPodaj numer filmu do usuniecia: ");
+    scanf("%d",&id_num);
+    delete_node_movie(*list,id_num);
+    overwriteFilmy(file,list);
 }
 
 
@@ -96,7 +102,10 @@ void readDataFilmy(FILE *file,struct list_node_movie **list){
     // read file contents till end of file
     while(fread(&f, sizeof(struct filmy), 1, file))
     {
-        *list = add_node_movie(*list,f);
+        if(*list == NULL)
+            *list = create_list_movie(f);
+        else
+            *list = add_node_movie(*list,f);
     }
     // close file
     fclose (file);

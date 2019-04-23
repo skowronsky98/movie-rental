@@ -131,6 +131,26 @@ void print_list_movie(struct list_node_movie *list_pointer)
     puts("");
 }
 
+void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
+{
+    struct filmy f;
+
+    while(list_pointer) {
+        f.id_filmu= list_pointer->id_filmu;
+        strcpy(f.tytul,list_pointer->tytul);
+        f.rok= list_pointer->rok;
+        strcpy(f.rezyser,list_pointer->rezyser);
+        strcpy(f.gatunek,list_pointer->gatunek);
+        f.liczba_egzemplarzy= list_pointer->liczba_egzemplarzy;
+        f.liczba_wypozyczonych= list_pointer->liczba_wypozyczonych;
+
+        fwrite (&f, sizeof(struct filmy), 1, file);
+
+        list_pointer=list_pointer->next;
+    }
+}
+
+
 void remove_list_movie(struct list_node_movie **list_pointer)
 {
     while(*list_pointer) {

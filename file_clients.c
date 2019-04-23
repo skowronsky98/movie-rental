@@ -7,6 +7,32 @@
 
 #include "node_list.h"
 
+void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
+
+    file = fopen("klienci.dat","a+");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "\nError opend file\n");
+        exit (1);
+    }
+    // write struct to file
+    fwrite (&d, sizeof(struct klienci), 1, file);
+    // add element to list
+    if(*list == NULL)
+        *list = create_list(d);
+    else
+        *list = add_node(*list,d);
+
+    if(fwrite != 0)
+        printf("contents to file written successfully !\n");
+    else
+        printf("error writing file !\n");
+
+    // close file
+    fclose (file);
+}
+
 void addClient(FILE *file, struct list_node **list){
 
     struct klienci d;
@@ -24,8 +50,11 @@ void addClient(FILE *file, struct list_node **list){
     saveDataKlienci(d,file,list);
 }
 
-void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 
+
+void overwriteKlienci(FILE *file, struct list_node **list_pointer){
+
+    int status = remove("klienci.dat");
     file = fopen("klienci.dat","a+");
 
     if (file == NULL)
@@ -33,39 +62,8 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
         fprintf(stderr, "\nError opend file\n");
         exit (1);
     }
-    // write struct to file
-    fwrite (&d, sizeof(struct klienci), 1, file);
-    // add element to list
-    *list = add_node(*list,d);
 
-    if(fwrite != 0)
-        printf("contents to file written successfully !\n");
-    else
-        printf("error writing file !\n");
-
-    // close file
-    fclose (file);
-}
-
-void deleteKlienci(struct klienci d,FILE *file,struct list_node **list){
-
-    int id_num=0;
-    printf("\nPodaj numer karty klienta do usuniecia: ");
-    scanf("%d",&id_num);
-    delete_node(*list,id_num);
-    overwriteKlienci(d,file,list);
-}
-void overwriteKlienci(struct klienci d,FILE *file, struct list_node **list){
-
-    file = fopen("klienci.dat","w");
-
-    if (file == NULL)
-    {
-        fprintf(stderr, "\nError opend file\n");
-        exit (1);
-    }
-    // overwrite struct to file
-    fwrite (&d, sizeof(struct klienci), 1, file);
+    add_list_to_file(file,*list_pointer);
 
     if(fwrite != 0)
         printf("contents to file overwritten successfully !\n");
@@ -75,6 +73,16 @@ void overwriteKlienci(struct klienci d,FILE *file, struct list_node **list){
     // close file
     fclose (file);
 }
+
+void deleteKlienci(FILE *file,struct list_node **list){
+
+    int id_num=0;
+    printf("\nPodaj numer karty klienta do usuniecia: ");
+    scanf("%d",&id_num);
+    delete_node(*list,id_num);
+    overwriteKlienci(file,list);
+}
+
 
 void readDataKlienci(FILE *file, struct list_node **list){
 
@@ -90,7 +98,10 @@ void readDataKlienci(FILE *file, struct list_node **list){
     // read file contents till end of file
     while(fread(&k, sizeof(struct klienci), 1, file))
     {
-        *list = add_node(*list,k);
+        if(*list == NULL)
+            *list = create_list(k);
+        else
+            *list = add_node(*list,k);
     }
     // close file
     fclose (file);

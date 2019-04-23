@@ -13,6 +13,22 @@ struct klienci {
     char email[50];
 };
 
+
+
+struct list_node;
+
+extern struct list_node *create_list(struct klienci);
+extern struct list_node *add_node(struct list_node*,struct klienci);
+extern struct list_node *delete_node(struct list_node*, int);
+extern void print_list(struct list_node*);
+void add_list_to_file(FILE *, struct list_node *);
+extern void remove_list(struct list_node**);
+
+void readDataKlienci(FILE *file, struct list_node**);
+void addClient(FILE *,struct list_node **);
+void deleteKlienci(FILE *file ,struct list_node**);
+
+
 struct filmy {
     int id_filmu;
     char tytul[27];
@@ -23,13 +39,6 @@ struct filmy {
     int liczba_wypozyczonych;
 };
 
-struct list_node;
-
-extern struct list_node *create_list(struct klienci);
-extern struct list_node *add_node(struct list_node*,struct klienci);
-extern struct list_node *delete_node(struct list_node*, int);
-extern void print_list(struct list_node*);
-extern void remove_list(struct list_node**);
 
 struct list_node_movie;
 
@@ -37,20 +46,12 @@ extern struct list_node_movie *create_list_movie(struct filmy);
 extern struct list_node_movie *add_node_movie(struct list_node_movie*,struct filmy);
 extern struct list_node_movie *delete_node_movie(struct list_node_movie*, int);
 extern void print_list_movie(struct list_node_movie*);
+void add_list_movie_to_file(FILE *, struct list_node_movie *);
 extern void remove_list_movie(struct list_node_movie**);
 
 
-
-void readDataKlienci(FILE *file, struct list_node**);
-void addClient(FILE *,struct list_node **);
-void saveDataKlienci(struct klienci,FILE *file,struct list_node**);
-void overwriteKlienci(struct klienci, FILE *file, struct list_node**);
-void deleteKlienci(struct klienci, FILE *file ,struct list_node**);
-
 void addMovie(FILE *, struct list_node_movie **);
-void saveDataFilmy (struct filmy ,FILE *file, struct list_node_movie **);
 void readDataFilmy (FILE *file,struct list_node_movie**);
-void overwriteFilmy(struct filmy, FILE *file, struct list_node_movie**);
-void deleteFilmy(struct filmy, FILE *file ,struct list_node_movie**);
+void deleteFilmy(FILE *file ,struct list_node_movie**);
 
 #endif //PPPROJEKT_NODE_LIST_H

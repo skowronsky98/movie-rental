@@ -125,6 +125,24 @@ void print_list(struct list_node *list_pointer)
     puts("");
 }
 
+void add_list_to_file(FILE *file, struct list_node *list_pointer)
+{
+    struct klienci k;
+
+    while(list_pointer) {
+        k.numer_karty = list_pointer->numer_karty;
+        strcpy(k.imie,list_pointer->imie);
+        strcpy(k.nazwisko,list_pointer->nazwisko);
+        k.numer_telefonu= list_pointer->numer_telefonu;
+        strcpy(k.email,list_pointer->email);
+
+        fwrite (&k, sizeof(struct klienci), 1, file);
+
+        list_pointer=list_pointer->next;
+    }
+}
+
+
 void remove_list(struct list_node **list_pointer)
 {
     while(*list_pointer) {
