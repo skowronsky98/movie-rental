@@ -46,6 +46,34 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
     // close file
     fclose (file);
 }
+void deleteKlienci(struct klienci d,FILE *file,struct list_node **list){
+
+    int id_num=0;
+    printf("\nPodaj numer karty klienta do usuniecia: ");
+    scanf("%d",&id_num);
+    delete_node(*list,id_num);
+    overwriteKlienci(d,file,list);
+}
+void overwriteKlienci(struct klienci d,FILE *file, struct list_node **list){
+
+    file = fopen("klienci.dat","w");
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "\nError opend file\n");
+        exit (1);
+    }
+    // overwrite struct to file
+    fwrite (&d, sizeof(struct klienci), 1, file);
+
+    if(fwrite != 0)
+        printf("contents to file overwritten successfully !\n");
+    else
+        printf("error overwriting file !\n");
+
+    // close file
+    fclose (file);
+}
 
 void readDataKlienci(FILE *file, struct list_node **list){
 

@@ -43,7 +43,9 @@ extern void remove_list_movie(struct list_node_movie**);
 
 void readDataKlienci(FILE *file, struct list_node**);
 void addClient(FILE *,struct list_node **);
-void saveDataKlienci(struct klienci,FILE *file,struct list_node **);
+void saveDataKlienci(struct klienci,FILE *file,struct list_node**);
+void overwriteKlienci(struct klienci, FILE *file, struct list_node**);
+void deleteKlienci(struct klienci, FILE *file ,struct list_node**);
 
 void addMovie(FILE *, struct list_node_movie **);
 void saveDataFilmy (struct filmy ,FILE *file, struct list_node_movie **);

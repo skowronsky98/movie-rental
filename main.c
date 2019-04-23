@@ -53,7 +53,7 @@ int main()
                 addClient(file_klienci, &list);
                 break;
             case 2:
-                // cos
+                deleteKlienci(k,file_klienci,&list);
                 break;
             case 3:
                 //cos
