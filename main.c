@@ -71,6 +71,11 @@ int main()
             case 8:
                 print_list_movie(list_movie);
                 break;
+            case 0:
+                printf("\nKoniec programu");
+                break;
+            default:
+                printf("\nNiepoprawny wybor\n");
 
         }
 
