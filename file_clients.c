@@ -46,6 +46,7 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
     // close file
     fclose (file);
 }
+
 void deleteKlienci(struct klienci d,FILE *file,struct list_node **list){
 
     int id_num=0;

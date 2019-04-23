@@ -65,9 +65,11 @@ int main()
                 addMovie(file_filmy,&list_movie);
                 break;
             case 6:
-                //cos
+                deleteFilmy(f, file_filmy,&list_movie);
+                break;
             case 7:
                 //cos
+                break;
             case 8:
                 print_list_movie(list_movie);
                 break;

@@ -50,5 +50,7 @@ void deleteKlienci(struct klienci, FILE *file ,struct list_node**);
 void addMovie(FILE *, struct list_node_movie **);
 void saveDataFilmy (struct filmy ,FILE *file, struct list_node_movie **);
 void readDataFilmy (FILE *file,struct list_node_movie**);
+void overwriteFilmy(struct filmy, FILE *file, struct list_node_movie**);
+void deleteFilmy(struct filmy, FILE *file ,struct list_node_movie**);
 
 #endif //PPPROJEKT_NODE_LIST_H
