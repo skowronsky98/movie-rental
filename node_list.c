@@ -143,6 +143,78 @@ void add_list_to_file(FILE *file, struct list_node *list_pointer)
 }
 
 
+void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *list_pointer_temp)
+{
+
+    while(list_pointer_temp && list_pointer_temp->numer_karty != id) {
+        list_pointer_temp=list_pointer_temp->next;
+    }
+
+    if(list_pointer_temp){
+        struct klienci k;
+        k.numer_karty = list_pointer_temp->numer_karty;
+        strcpy(k.imie,list_pointer_temp->imie);
+        strcpy(k.nazwisko,list_pointer_temp->nazwisko);
+        k.numer_telefonu= list_pointer_temp->numer_telefonu;
+        strcpy(k.email,list_pointer_temp->email);
+
+        int tmp_int = 0;
+        char tmp_char[27] = {0};
+
+        switch(field){
+            case 1:
+                printf("Podaj nowy nr karty: ");
+                scanf("%d",&tmp_int);
+                k.numer_karty = tmp_int;
+                break;
+            case 2:
+                printf("Podaj nowe imie: ");
+                scanf("%s",tmp_char);
+                strcpy(k.imie,tmp_char);
+                break;
+            case 3:
+                printf("Podaj nowe nazwisko: ");
+                scanf("%s",tmp_char);
+                strcpy(k.nazwisko,tmp_char);
+                break;
+            case 4:
+                printf("Podaj nowy nr telefonu: ");
+                scanf("%d",&tmp_int);
+                k.numer_telefonu = tmp_int;
+                break;
+            case 5:
+                printf("Podaj nowy email: ");
+                scanf("%s",tmp_char);
+                strcpy(k.email,tmp_char);
+                break;
+
+        }
+
+        *list_pointer = delete_node(*list_pointer,id);
+
+        *list_pointer = add_node(*list_pointer,k);
+
+        overwriteKlienci(file,list_pointer);
+    }
+
+}
+
+int print_node(struct list_node *list_pointer, int id)
+{
+    while(list_pointer && list_pointer->numer_karty != id) {
+        list_pointer=list_pointer->next;
+    }
+
+    if(list_pointer){
+        printf("nr. karty: %d | imie: %s | nazwisko: %s | nr. tel: %d | email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
+        return 1;
+    }
+
+    return -1;
+}
+
+
+
 void remove_list(struct list_node **list_pointer)
 {
     while(*list_pointer) {

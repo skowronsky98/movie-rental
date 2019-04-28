@@ -42,14 +42,24 @@ int main()
                 printf("Podaj numer karty klienta ktorego chcesz edytowac: ");
                 scanf("%d",&editklient);
 
-                printf("\nPodaj numer pola ktore chcesz edytowac:\n");
-                printf("1: Numer karty\n");
-                printf("2: Imie\n");
-                printf("3: Nazwisko\n");
-                printf("4: Numer Telefonu\n");
-                printf("5: Email\n");
-                printf("Wybor: ");
-                scanf("%d",&fieldklient);
+                if(print_node(list,editklient) == 1)
+                {
+                    printf("\nPodaj numer pola ktore chcesz edytowac:\n");
+                    printf("1: Numer karty\n");
+                    printf("2: Imie\n");
+                    printf("3: Nazwisko\n");
+                    printf("4: Numer Telefonu\n");
+                    printf("5: Email\n");
+                    printf("Wybor: ");
+
+                    scanf("%d",&fieldklient);
+
+                    //zakres
+                    if(fieldklient > 0 && fieldklient < 6)
+                        edit_list(file_klienci,&list,editklient,fieldklient,list);
+
+                }
+
 
                 //      TUTAJ FUNKCJA EDYTUJACA
                 break;
@@ -66,16 +76,22 @@ int main()
                 printf("Podaj id filmu ktory chcesz edytowac: ");
                 scanf("%d",&editmovie);
 
-                printf("\nPodaj numer pola ktore chcesz edytowac:\n");
-                printf("1: Id Filmu\n");
-                printf("2: Tytul\n");
-                printf("3: Rok\n");
-                printf("4: Rezyser\n");
-                printf("5: Gatunek\n");
-                printf("6: Liczba egzemplarzy\n");
-                printf("7: Liczba wypozyczonych\n");
-                printf("Wybor: ");
-                scanf("%d",&fieldmovie);
+                if(print_node_movie(list_movie,editmovie) == 1)
+                {
+                    printf("\nPodaj numer pola ktore chcesz edytowac:\n");
+                    printf("1: Id Filmu\n");
+                    printf("2: Tytul\n");
+                    printf("3: Rok\n");
+                    printf("4: Rezyser\n");
+                    printf("5: Gatunek\n");
+                    printf("6: Liczba egzemplarzy\n");
+                    printf("7: Liczba wypozyczonych\n");
+                    printf("Wybor: ");
+                    scanf("%d",&fieldmovie);
+
+                    if(fieldmovie> 0 && fieldmovie < 8)
+                        edit_list_movie(file_filmy,&list_movie,editmovie,fieldmovie,list_movie);
+                }
 
                 //      TUTAJ FUNKCJA EDYTUJACA
                 break;

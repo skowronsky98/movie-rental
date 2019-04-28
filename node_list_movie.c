@@ -133,6 +133,7 @@ void print_list_movie(struct list_node_movie *list_pointer)
 
 void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
 {
+
     struct filmy f;
 
     while(list_pointer) {
@@ -147,7 +148,96 @@ void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
         fwrite (&f, sizeof(struct filmy), 1, file);
 
         list_pointer=list_pointer->next;
+
+        fclose (file);
+
     }
+}
+
+int print_node_movie(struct list_node_movie *list_pointer, int id)
+{
+    while(list_pointer && list_pointer->id_filmu!=id) {
+        list_pointer=list_pointer->next;
+    }
+
+    if(list_pointer)
+    {
+        printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s | l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+               list_pointer->id_filmu,list_pointer->tytul,list_pointer->rok,list_pointer->rezyser,list_pointer->gatunek,list_pointer->liczba_egzemplarzy,list_pointer->liczba_wypozyczonych);
+
+        return 1;
+    }
+
+    return -1;
+}
+
+void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, int field, struct list_node_movie *list_pointer_temp)
+{
+
+    while(list_pointer_temp && list_pointer_temp->id_filmu != id) {
+        list_pointer_temp=list_pointer_temp->next;
+    }
+
+    if(list_pointer_temp){
+        struct filmy f;
+        f.id_filmu= list_pointer_temp->id_filmu;
+        strcpy(f.tytul,list_pointer_temp->tytul);
+        f.rok= list_pointer_temp->rok;
+        strcpy(f.rezyser,list_pointer_temp->rezyser);
+        strcpy(f.gatunek,list_pointer_temp->gatunek);
+        f.liczba_egzemplarzy= list_pointer_temp->liczba_egzemplarzy;
+        f.liczba_wypozyczonych = list_pointer_temp->liczba_wypozyczonych;
+
+        int tmp_int = 0;
+        char tmp_char[27] = {0};
+
+        switch(field){
+            case 1:
+                printf("Podaj nowe id filmu: ");
+                scanf("%d",&tmp_int);
+                f.id_filmu = tmp_int;
+                break;
+            case 2:
+                printf("Podaj nowy tytul: ");
+                scanf("%s",tmp_char);
+                strcpy(f.tytul,tmp_char);
+                break;
+            case 3:
+                printf("Podaj nowy rok filmu: ");
+                scanf("%d",&tmp_int);
+                f.rok = tmp_int;
+                break;
+            case 4:
+                printf("Podaj nowego rezysera: ");
+                scanf("%s",tmp_char);
+                strcpy(f.rezyser,tmp_char);
+                break;
+            case 5:
+                printf("Podaj nowy gatunek: ");
+                scanf("%s",tmp_char);
+                strcpy(f.gatunek,tmp_char);
+                break;
+            case 6:
+                printf("Podaj nowa liczbe egzemplarzy: ");
+                scanf("%d",&tmp_int);
+                f.liczba_egzemplarzy = tmp_int;
+                break;
+
+            case 7:
+                printf("Podaj nowa liczbe wypozyczonych: ");
+                scanf("%d",&tmp_int);
+                f.liczba_wypozyczonych = tmp_int;
+                break;
+
+        }
+
+        *list_pointer = delete_node_movie(*list_pointer,id);
+
+        *list_pointer = add_node_movie(*list_pointer,f);
+
+        overwriteFilmy(file,list_pointer);
+    }
+
 }
 
 

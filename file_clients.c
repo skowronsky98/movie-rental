@@ -74,6 +74,7 @@ void overwriteKlienci(FILE *file, struct list_node **list_pointer){
     fclose (file);
 }
 
+
 void deleteKlienci(FILE *file,struct list_node **list){
 
     int id_num=0;
@@ -82,7 +83,6 @@ void deleteKlienci(FILE *file,struct list_node **list){
     *list = delete_node(*list,id_num);
     overwriteKlienci(file,list);
 }
-
 
 void readDataKlienci(FILE *file, struct list_node **list){
 
