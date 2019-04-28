@@ -169,12 +169,12 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
                 break;
             case 2:
                 printf("Podaj nowe imie: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(k.imie,tmp_char);
                 break;
             case 3:
                 printf("Podaj nowe nazwisko: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(k.nazwisko,tmp_char);
                 break;
             case 4:
@@ -184,7 +184,7 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
                 break;
             case 5:
                 printf("Podaj nowy email: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(k.email,tmp_char);
                 break;
 

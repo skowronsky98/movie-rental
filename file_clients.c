@@ -39,13 +39,13 @@ void addClient(FILE *file, struct list_node **list){
     printf("Podaj numer karty: ");
     scanf("%d",&d.numer_karty);
     printf("Podaj imie: ");
-    scanf("%s",d.imie);
+    scanf(" %[^\n]s",d.imie);
     printf("Podaj nazwisko: ");
-    scanf("%s",d.nazwisko);
+    scanf(" %[^\n]s",d.nazwisko);
     printf("Podaj numer telefonu: ");
     scanf("%d",&d.numer_telefonu);
     printf("Podaj email: ");
-    scanf("%s",d.email);
+    scanf(" %[^\n]s",d.email);
 
     saveDataKlienci(d,file,list);
 }

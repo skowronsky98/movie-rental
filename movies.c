@@ -39,13 +39,13 @@ void addMovie(FILE *file, struct list_node_movie **list){
     printf("Podaj id filmu: ");
     scanf("%d",&d.id_filmu);
     printf("Podaj tytul: ");
-    scanf("%s",d.tytul);
+    scanf(" %[^\n]s",d.tytul);
     printf("Podaj rok produkcji: ");
     scanf("%d",&d.rok);
     printf("Podaj rezysera: ");
-    scanf("%s",d.rezyser);
+    scanf(" %[^\n]s",d.rezyser);
     printf("Podaj gatunek: ");
-    scanf("%s",d.gatunek);
+    scanf(" %[^\n]s",d.gatunek);
     printf("Podaj ilosc egzemplarzy: ");
     scanf("%d",&d.liczba_egzemplarzy);
     printf("Podaj ilosc wypozyczonych: ");

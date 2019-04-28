@@ -199,7 +199,7 @@ void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, 
                 break;
             case 2:
                 printf("Podaj nowy tytul: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(f.tytul,tmp_char);
                 break;
             case 3:
@@ -209,12 +209,12 @@ void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, 
                 break;
             case 4:
                 printf("Podaj nowego rezysera: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(f.rezyser,tmp_char);
                 break;
             case 5:
                 printf("Podaj nowy gatunek: ");
-                scanf("%s",tmp_char);
+                scanf(" %[^\n]s",tmp_char);
                 strcpy(f.gatunek,tmp_char);
                 break;
             case 6:
