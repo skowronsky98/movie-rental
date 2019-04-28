@@ -14,7 +14,7 @@ int main()
     struct list_node_movie *list_movie = NULL;
     readDataFilmy(file_filmy,&list_movie);
 
-    int operacja,editklient,editmovie;
+    int operacja,editklient,editmovie,fieldklient,fieldmovie;
 
     while(operacja != 0) {
         printf("Spis tresci:\n");
@@ -41,8 +41,17 @@ int main()
             case 3:
                 printf("Podaj numer karty klienta ktorego chcesz edytowac: ");
                 scanf("%d",&editklient);
+
+                printf("\nPodaj numer pola ktore chcesz edytowac:\n");
+                printf("1: Numer karty\n");
+                printf("2: Imie\n");
+                printf("3: Nazwisko\n");
+                printf("4: Numer Telefonu\n");
+                printf("5: Email\n");
+                printf("Wybor: ");
+                scanf("%d",&fieldklient);
+
                 //      TUTAJ FUNKCJA EDYTUJACA
-                printf("\nPomyslnie edytowano klienta\n\n");
                 break;
             case 4:
                 print_list(list);
@@ -56,8 +65,19 @@ int main()
             case 7:
                 printf("Podaj id filmu ktory chcesz edytowac: ");
                 scanf("%d",&editmovie);
+
+                printf("\nPodaj numer pola ktore chcesz edytowac:\n");
+                printf("1: Id Filmu\n");
+                printf("2: Tytul\n");
+                printf("3: Rok\n");
+                printf("4: Rezyser\n");
+                printf("5: Gatunek\n");
+                printf("6: Liczba egzemplarzy\n");
+                printf("7: Liczba wypozyczonych\n");
+                printf("Wybor: ");
+                scanf("%d",&fieldmovie);
+
                 //      TUTAJ FUNKCJA EDYTUJACA
-                printf("\nPomyslnie edytowano film\n\n");
                 break;
             case 8:
                 print_list_movie(list_movie);
