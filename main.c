@@ -14,7 +14,7 @@ int main()
     struct list_node_movie *list_movie = NULL;
     readDataFilmy(file_filmy,&list_movie);
 
-    int operacja;
+    int operacja,editklient,editmovie;
 
     while(operacja != 0) {
         printf("Spis tresci:\n");
@@ -39,7 +39,10 @@ int main()
                 deleteKlienci(file_klienci,&list);
                 break;
             case 3:
-                //cos
+                printf("Podaj numer karty klienta ktorego chcesz edytowac: ");
+                scanf("%d",&editklient);
+                //      TUTAJ FUNKCJA EDYTUJACA
+                printf("\nPomyslnie edytowano klienta\n\n");
                 break;
             case 4:
                 print_list(list);
@@ -51,7 +54,10 @@ int main()
                 deleteFilmy(file_filmy,&list_movie);
                 break;
             case 7:
-                //cos
+                printf("Podaj id filmu ktory chcesz edytowac: ");
+                scanf("%d",&editmovie);
+                //      TUTAJ FUNKCJA EDYTUJACA
+                printf("\nPomyslnie edytowano film\n\n");
                 break;
             case 8:
                 print_list_movie(list_movie);
