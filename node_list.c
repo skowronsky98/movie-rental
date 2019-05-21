@@ -213,7 +213,68 @@ int print_node(struct list_node *list_pointer, int id)
     return -1;
 }
 
+void quicksort(struct list_node *number[],int first,int last){
+    int i, j, pivot;
+    struct list_node* temp;
+    if(first<last){
+        pivot=first;
+        i=first;
+        j=last;
 
+        while(i<j){
+            while(number[i]->numer_telefonu<=number[pivot]->numer_telefonu&&i<last)
+                i++;
+            while(number[j]->numer_telefonu>number[pivot]->numer_telefonu)
+                j--;
+            if(i<j){
+                temp=number[i];
+                number[i]=number[j];
+                number[j]=temp;
+            }
+        }
+
+        temp=number[pivot];
+        number[pivot]=number[j];
+        number[j]=temp;
+        quicksort(number,first,j-1);
+        quicksort(number,j+1,last);
+
+    }
+}
+
+int count_list(struct list_node *node)
+{
+    int count = 0;
+    while (node)
+    {
+        count++;
+        node = node->next;
+    }
+    return count;
+}
+
+void sort_by_phone_number(struct list_node *node)
+{
+    if(node)
+    {
+        const int length = count_list(node);
+
+        struct list_node *arr[1000] = {NULL};
+        int i=0;
+
+        while (node)
+        {
+            arr[i] = node;
+            i++;
+            node = node->next;
+        }
+
+        quicksort(&arr,0,length-1);
+
+        for(int j = length-1; j >=0; j--)
+            print_node(arr[j],arr[j]->numer_karty);
+    }
+}
 
 void remove_list(struct list_node **list_pointer)
 {

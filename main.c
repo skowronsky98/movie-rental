@@ -26,6 +26,7 @@ int main()
         printf("6. Usun film\n");
         printf("7. Edytuj film\n");
         printf("8. Wypisz liste filmow\n");
+        printf("9. Sortuj\n");
         printf("0 - Koniec programu\n\n");
         printf("Wybor: ");
         scanf("%d", &operacja);
@@ -98,6 +99,10 @@ int main()
             case 8:
                 print_list_movie(list_movie);
                 break;
+            case 9:
+                sort_by_phone_number(list);
+                break;
+
             case 0:
                 printf("\nKoniec programu");
                 break;
