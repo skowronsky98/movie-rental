@@ -61,6 +61,6 @@ void deleteFilmy(FILE *file ,struct list_node_movie**);
 
 void overwriteFilmy(FILE *file, struct list_node_movie **list);
 void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, int field, struct list_node_movie *);
-
+void search_movie(char[], struct list_node_movie *);
 
 #endif //PPPROJEKT_NODE_LIST_H

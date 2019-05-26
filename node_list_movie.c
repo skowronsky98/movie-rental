@@ -240,6 +240,22 @@ void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, 
 
 }
 
+void search_movie(char pattern[], struct list_node_movie *list_pointer)
+{
+    while (list_pointer)
+    {
+        if(strstr(list_pointer->tytul,pattern))
+        {
+            printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s "
+                     "| l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+                   list_pointer->id_filmu,list_pointer->tytul,list_pointer->rok,
+                   list_pointer->rezyser,list_pointer->gatunek,list_pointer->liczba_egzemplarzy,
+                   list_pointer->liczba_wypozyczonych);
+        }
+        list_pointer = list_pointer->next;
+    }
+}
+
 
 void remove_list_movie(struct list_node_movie **list_pointer)
 {

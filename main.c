@@ -27,6 +27,7 @@ int main()
         printf("7. Edytuj film\n");
         printf("8. Wypisz liste filmow\n");
         printf("9. Sortuj\n");
+        printf("10. Szukaj filmu\n");
         printf("0 - Koniec programu\n\n");
         printf("Wybor: ");
         scanf("%d", &operacja);
@@ -101,6 +102,14 @@ int main()
                 break;
             case 9:
                 sort_by_phone_number(list);
+                break;
+            case 10:
+                printf("Podaj tyttul filmu: ");
+                char pattern[] = {NULL};
+                scanf(" %[^\n]s",pattern);
+
+                search_movie(pattern, list_movie);
+
                 break;
 
             case 0:
