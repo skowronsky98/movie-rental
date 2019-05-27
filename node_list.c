@@ -276,6 +276,58 @@ void sort_by_phone_number(struct list_node *node)
     }
 }
 
+int comparator(const void* p, const void* q)
+{
+    return strcmp(((struct list_node*)p)->imie,
+                  ((struct list_node*)q)->imie);
+}
+
+
+void sort_by_name(struct list_node *node){
+    const int length = count_list(node);
+    struct list_node *arr[length];
+    int i=0;
+    while (node)
+    {
+        arr[i]=node;
+        node = node->next;
+        i++;
+    }
+
+    struct clients {
+        int numer_karty;
+        char imie[27];
+        char nazwisko[27];
+        int numer_telefonu;
+        char email[50];
+    };
+    struct clients tab[length];
+    for (i = 0; i < length; i++) {
+        tab[i].numer_karty = arr[i]->numer_karty;
+        strcpy(tab[i].imie,arr[i]->imie);
+        strcpy(tab[i].nazwisko,arr[i]->nazwisko);
+        tab[i].numer_telefonu = arr[i]->numer_telefonu;
+        strcpy(tab[i].email,arr[i]->email);
+    }
+
+    printf("Before sort:\n");
+    for (i = 0; i < length; i++) {
+        printf("Id = %d, Name = %s\n",
+               tab[i].numer_karty, tab[i].imie);
+    }
+
+
+    qsort(tab, length, sizeof(tab[0]), comparator);
+
+    printf("After sort:\n");
+    for (i = 0; i < length; i++) {
+        printf("Id = %d, Name = %s\n",
+               tab[i].numer_karty, tab[i].imie);
+    }
+}
+
+
+
 void remove_list(struct list_node **list_pointer)
 {
     while(*list_pointer) {

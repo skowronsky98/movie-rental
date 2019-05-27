@@ -30,7 +30,7 @@ void overwriteKlienci(FILE *file, struct list_node **list_pointer);
 
 void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *);
 void sort_by_phone_number(struct list_node *);
-
+void sort_by_name(struct list_node *);
 
 
 struct filmy {

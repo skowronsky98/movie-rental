@@ -111,7 +111,9 @@ int main()
                 search_movie(pattern, list_movie);
 
                 break;
-
+            case 11:
+                sort_by_name(list);
+                break;
             case 0:
                 printf("\nKoniec programu");
                 break;
