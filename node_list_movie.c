@@ -256,6 +256,157 @@ void search_movie(char pattern[], struct list_node_movie *list_pointer)
     }
 }
 
+int count_list_movie(struct list_node_movie *node)
+{
+    int count = 0;
+    while (node)
+    {
+        count++;
+        node = node->next;
+    }
+    return count;
+}
+
+
+int comparator_tytul(const void* p, const void* q)
+{
+    return strcmp(((struct list_node_movie*)p)->tytul,
+                  ((struct list_node_movie*)q)->tytul);
+}
+
+int comparator_rezyser(const void* p, const void* q)
+{
+    return strcmp(((struct list_node_movie*)p)->rezyser,
+                  ((struct list_node_movie*)q)->rezyser);
+}
+
+int comparator_gatunek(const void* p, const void* q)
+{
+    return strcmp(((struct list_node_movie*)p)->gatunek,
+                  ((struct list_node_movie*)q)->gatunek);
+}
+
+int compare_rok(const void * a, const void * b)
+{
+
+    struct list_node_movie *orderA = (struct list_node_movie *)a;
+    struct list_node_movie *orderB = (struct list_node_movie *)b;
+
+    return ( orderA->rok - orderB->rok );
+}
+
+int compare_idfilmu(const void * a, const void * b)
+{
+
+    struct list_node_movie *orderA = (struct list_node_movie *)a;
+    struct list_node_movie *orderB = (struct list_node_movie *)b;
+
+    return ( orderA->id_filmu - orderB->id_filmu );
+}
+
+int compare_wypozyczenia(const void * a, const void * b)
+{
+
+    struct list_node_movie *orderA = (struct list_node_movie *)a;
+    struct list_node_movie *orderB = (struct list_node_movie *)b;
+
+    return ( orderA->liczba_wypozyczonych - orderB->liczba_wypozyczonych );
+}
+
+int compare_egzemplarze(const void * a, const void * b)
+{
+
+    struct list_node_movie *orderA = (struct list_node_movie *)a;
+    struct list_node_movie *orderB = (struct list_node_movie *)b;
+
+    return ( orderA->liczba_egzemplarzy - orderB->liczba_egzemplarzy );
+}
+
+void sort_by_name(struct list_node_movie *node){
+    const int length = count_list_movie(node);
+    struct list_node_movie *arr[length];
+    int i=0;
+    while (node)
+    {
+        arr[i] = node;
+        node = node->next;
+        i++;
+    }
+
+    struct filmy tab[length];
+    for (i = 0; i < length; i++) {
+        tab[i].id_filmu = arr[i]->id_filmu;
+        strcpy(tab[i].tytul,arr[i]->tytul);
+        tab[i].rok = arr[i]->rok;
+        strcpy(tab[i].rezyser,arr[i]->rezyser);
+        strcpy(tab[i].gatunek,arr[i]->gatunek);
+        tab[i].liczba_egzemplarzy = arr[i]->liczba_egzemplarzy;
+        tab[i].liczba_wypozyczonych = arr[i]->liczba_wypozyczonych;
+    }
+
+    int opcja=0;
+    do {
+        printf("Wedlug ktorego pola chcesz posortowac?\n");
+        printf("1. Id filmu\n");
+        printf("2. Tytul\n");
+        printf("3. Rok\n");
+        printf("4. Rezyser\n");
+        printf("5. Gatunek\n");
+        printf("6. Liczba Egzemplarzy\n");
+        printf("7. Liczba Wypozyczonych\n");
+        printf("Twoj wybor: ");
+        scanf("%d", &opcja);
+        switch (opcja) {
+            case 1:
+                qsort(tab, length, sizeof(tab[0]), compare_idfilmu);
+                break;
+            case 2:
+                qsort(tab, length, sizeof(tab[0]), comparator_tytul);
+                break;
+            case 3:
+                qsort(tab,length,sizeof(tab[0]),compare_rok);
+                break;
+            case 4:
+                qsort(tab, length, sizeof(tab[0]), comparator_rezyser);
+                break;
+            case 5:
+                qsort(tab, length, sizeof(tab[0]), comparator_gatunek);
+                break;
+            case 6:
+                qsort(tab, length, sizeof(tab[0]), compare_wypozyczenia);
+                break;
+            case 7:
+                qsort(tab, length, sizeof(tab[0]), compare_egzemplarze);
+                break;
+            default:
+                printf("Podano inna opcje\n");
+        }
+    } while (opcja > 7 || opcja < 1);
+
+    printf("Chcesz posortowac rosnaco(0) czy malejaco(1)?\n");
+    printf("Twoj wybor: ");
+    scanf("%d",&opcja);
+    printf("Po sortowaniu:\n");
+    if (opcja == 0) {
+        for (i = 0; i < length; i++) {
+            printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s "
+                   "| l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+                   tab[i].id_filmu, tab[i].tytul, tab[i].rok,
+                   tab[i].rezyser, tab[i].gatunek, tab[i].liczba_egzemplarzy,
+                   tab[i].liczba_wypozyczonych);
+        }
+    }
+    else {
+        for (i = length-1; i>= 0; i--) {
+            printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s "
+                   "| l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+                   tab[i].id_filmu, tab[i].tytul, tab[i].rok,
+                   tab[i].rezyser, tab[i].gatunek, tab[i].liczba_egzemplarzy,
+                   tab[i].liczba_wypozyczonych);
+        }
+    }
+}
+
 
 void remove_list_movie(struct list_node_movie **list_pointer)
 {
