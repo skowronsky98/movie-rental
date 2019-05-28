@@ -24,6 +24,8 @@ extern void remove_list(struct list_node**);
 int print_node(struct list_node *, int);
 struct list_node *create_list_from_file(struct klienci);
 struct list_node *read_node_from_file(struct list_node *, struct klienci);
+int last_index(struct list_node *);
+
 
 
 

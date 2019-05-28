@@ -31,27 +31,21 @@ struct list_node *create_list(struct klienci client)
     return first;
 }
 
-struct list_node *create_list_from_file(struct klienci client)
+int last_index(struct list_node *list_pointer)
 {
-    struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
-
-    if(first) {
-        first->numer_karty = client.numer_karty;
-        strcpy(first->imie,client.imie);
-        strcpy(first->nazwisko,client.nazwisko);
-        first->numer_telefonu = client.numer_telefonu;
-        strcpy(first->email,client.email);
-        first->next = NULL;
+    int index = 0;
+    while (list_pointer)
+    {
+        index = list_pointer->numer_karty;
+        list_pointer = list_pointer->next;
     }
-    return first;
+
+    return index;
 }
 
 struct list_node *find_last_spot(struct list_node *list_pointer)
 {
-    //struct list_node *previous = list_pointer;
-
     while(list_pointer->next) {
-        //previous = list_pointer;
         list_pointer = list_pointer->next;
     }
     return list_pointer;
@@ -127,6 +121,23 @@ void print_list(struct list_node *list_pointer)
     puts("");
 }
 
+struct list_node *create_list_from_file(struct klienci client)
+{
+    struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
+
+    if(first) {
+
+        printf("\nid: %d \n",client.numer_karty);
+        first->numer_karty = client.numer_karty;
+        strcpy(first->imie,client.imie);
+        strcpy(first->nazwisko,client.nazwisko);
+        first->numer_telefonu = client.numer_telefonu;
+        strcpy(first->email,client.email);
+        first->next = NULL;
+    }
+    return first;
+}
+
 void add_list_to_file(FILE *file, struct list_node *list_pointer)
 {
     struct klienci k;
@@ -137,6 +148,7 @@ void add_list_to_file(FILE *file, struct list_node *list_pointer)
         strcpy(k.nazwisko,list_pointer->nazwisko);
         k.numer_telefonu= list_pointer->numer_telefonu;
         strcpy(k.email,list_pointer->email);
+
 
         fwrite (&k, sizeof(struct klienci), 1, file);
 
@@ -185,6 +197,7 @@ struct list_node *read_node_from_file(struct list_node *list_pointer, struct kli
             struct list_node *node= find_spot(list_pointer,client.numer_karty);
             add_in_middle_or_at_back(node,new_node);
         }
+
     }
 
     return list_pointer;
@@ -246,6 +259,7 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
     }
 
 }
+
 
 int print_node(struct list_node *list_pointer, int id)
 {

@@ -15,6 +15,8 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
     else
         *list = add_node(*list,d);
 
+    d.numer_karty = last_index(*list);
+
     file = fopen("klienci.dat","a+");
 
     if (file == NULL)
@@ -48,6 +50,7 @@ void addClient(FILE *file, struct list_node **list){
     scanf("%d",&d.numer_telefonu);
     printf("Podaj email: ");
     scanf(" %[^\n]s",d.email);
+
 
     saveDataKlienci(d,file,list);
 }
