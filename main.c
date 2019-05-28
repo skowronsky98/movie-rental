@@ -119,7 +119,6 @@ int main()
                 printf("\nNiepoprawny wybor\n");
 
         }
-
     }
     remove_list(&list);
     remove_list_movie(&list_movie);

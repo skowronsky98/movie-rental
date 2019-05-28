@@ -21,6 +21,21 @@ struct list_node *create_list(struct klienci client)
     struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
 
     if(first) {
+        first->numer_karty = 1;
+        strcpy(first->imie,client.imie);
+        strcpy(first->nazwisko,client.nazwisko);
+        first->numer_telefonu = client.numer_telefonu;
+        strcpy(first->email,client.email);
+        first->next = NULL;
+    }
+    return first;
+}
+
+struct list_node *create_list_from_file(struct klienci client)
+{
+    struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
+
+    if(first) {
         first->numer_karty = client.numer_karty;
         strcpy(first->imie,client.imie);
         strcpy(first->nazwisko,client.nazwisko);
@@ -31,27 +46,15 @@ struct list_node *create_list(struct klienci client)
     return first;
 }
 
-struct list_node *add_at_front(struct list_node *list_pointer, struct list_node *new_node)
+struct list_node *find_last_spot(struct list_node *list_pointer)
 {
-    new_node->next = list_pointer;
-    return new_node;
-}
+    //struct list_node *previous = list_pointer;
 
-struct list_node *find_spot(struct list_node *list_pointer, char card)
-{
-    struct list_node *previous = NULL;
-
-    while(list_pointer && list_pointer->numer_karty<card) {
-        previous = list_pointer;
+    while(list_pointer->next) {
+        //previous = list_pointer;
         list_pointer = list_pointer->next;
     }
-    return previous;
-}
-
-void add_in_middle_or_at_back(struct list_node *node, struct list_node *new_node)
-{
-    new_node->next = node->next;
-    node->next = new_node;
+    return list_pointer;
 }
 
 struct list_node *add_node(struct list_node *list_pointer, struct klienci client)
@@ -59,19 +62,17 @@ struct list_node *add_node(struct list_node *list_pointer, struct klienci client
     struct list_node *new_node = (struct list_node *) malloc(sizeof(struct list_node));
 
     if(list_pointer && new_node) {
-        new_node->numer_karty = client.numer_karty;
+        struct list_node *previous = find_last_spot(list_pointer);
+
+        new_node->numer_karty = previous->numer_karty+1;
         strcpy(new_node->imie,client.imie);
         strcpy(new_node->nazwisko,client.nazwisko);
         new_node->numer_telefonu = client.numer_telefonu;
         strcpy(new_node->email,client.email);
 
-        if(list_pointer->numer_karty>=client.numer_karty) {
-            return add_at_front(list_pointer, new_node);
-        }
-        else {
-            struct list_node *node= find_spot(list_pointer,client.numer_karty);
-            add_in_middle_or_at_back(node,new_node);
-        }
+        previous->next = new_node;
+        new_node->next = NULL;
+
     }
 
     return list_pointer;
@@ -118,8 +119,9 @@ struct list_node *delete_node(struct list_node *list_pointer, int card)
 
 void print_list(struct list_node *list_pointer)
 {
+    puts("");
     while(list_pointer) {
-        printf("nr. karty: %d | imie: %s | nazwisko: %s | nr. tel: %d | email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
+        printf("nr. karty: %d \t| imie: %s \t| nazwisko: %s \t| nr. tel: %d \t| email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
         list_pointer=list_pointer->next;
     }
     puts("");
@@ -140,6 +142,52 @@ void add_list_to_file(FILE *file, struct list_node *list_pointer)
 
         list_pointer=list_pointer->next;
     }
+}
+
+struct list_node *add_at_front(struct list_node *list_pointer, struct list_node *new_node)
+{
+    new_node->next = list_pointer;
+    return new_node;
+}
+
+struct list_node *find_spot(struct list_node *list_pointer, char card)
+{
+    struct list_node *previous = NULL;
+
+    while(list_pointer && list_pointer->numer_karty<card) {
+        previous = list_pointer;
+        list_pointer = list_pointer->next;
+    }
+    return previous;
+}
+
+void add_in_middle_or_at_back(struct list_node *node, struct list_node *new_node)
+{
+    new_node->next = node->next;
+    node->next = new_node;
+}
+
+struct list_node *read_node_from_file(struct list_node *list_pointer, struct klienci client)
+{
+    struct list_node *new_node = (struct list_node *) malloc(sizeof(struct list_node));
+
+    if(list_pointer && new_node) {
+        new_node->numer_karty = client.numer_karty;
+        strcpy(new_node->imie,client.imie);
+        strcpy(new_node->nazwisko,client.nazwisko);
+        new_node->numer_telefonu = client.numer_telefonu;
+        strcpy(new_node->email,client.email);
+
+        if(list_pointer->numer_karty>=client.numer_karty) {
+            return add_at_front(list_pointer, new_node);
+        }
+        else {
+            struct list_node *node= find_spot(list_pointer,client.numer_karty);
+            add_in_middle_or_at_back(node,new_node);
+        }
+    }
+
+    return list_pointer;
 }
 
 
@@ -192,7 +240,7 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
 
         *list_pointer = delete_node(*list_pointer,id);
 
-        *list_pointer = add_node(*list_pointer,k);
+        *list_pointer = read_node_from_file(*list_pointer,k);
 
         overwriteKlienci(file,list_pointer);
     }
@@ -201,12 +249,13 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
 
 int print_node(struct list_node *list_pointer, int id)
 {
+    puts("");
     while(list_pointer && list_pointer->numer_karty != id) {
         list_pointer=list_pointer->next;
     }
 
     if(list_pointer){
-        printf("nr. karty: %d | imie: %s | nazwisko: %s | nr. tel: %d | email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
+        printf("nr. karty: %d \t| imie: %s \t| nazwisko: %s \t| nr. tel: %d \t| email: %s\n",list_pointer->numer_karty,list_pointer->imie,list_pointer->nazwisko,list_pointer->numer_telefonu,list_pointer->email);
         return 1;
     }
 

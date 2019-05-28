@@ -22,6 +22,11 @@ extern void print_list(struct list_node*);
 void add_list_to_file(FILE *, struct list_node *);
 extern void remove_list(struct list_node**);
 int print_node(struct list_node *, int);
+struct list_node *create_list_from_file(struct klienci);
+struct list_node *read_node_from_file(struct list_node *, struct klienci);
+
+
+
 
 void readDataKlienci(FILE *file, struct list_node**);
 void addClient(FILE *,struct list_node **);

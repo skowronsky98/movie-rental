@@ -9,6 +9,12 @@
 
 void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 
+    // add element to list
+    if(*list == NULL)
+        *list = create_list(d);
+    else
+        *list = add_node(*list,d);
+
     file = fopen("klienci.dat","a+");
 
     if (file == NULL)
@@ -18,11 +24,7 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
     }
     // write struct to file
     fwrite (&d, sizeof(struct klienci), 1, file);
-    // add element to list
-    if(*list == NULL)
-        *list = create_list(d);
-    else
-        *list = add_node(*list,d);
+
 
     if(fwrite != 0)
         printf("contents to file written successfully !\n");
@@ -36,8 +38,8 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 void addClient(FILE *file, struct list_node **list){
 
     struct klienci d;
-    printf("Podaj numer karty: ");
-    scanf("%d",&d.numer_karty);
+   /* printf("Podaj numer karty: ");
+    scanf("%d",&d.numer_karty);*/
     printf("Podaj imie: ");
     scanf(" %[^\n]s",d.imie);
     printf("Podaj nazwisko: ");
@@ -99,9 +101,9 @@ void readDataKlienci(FILE *file, struct list_node **list){
     while(fread(&k, sizeof(struct klienci), 1, file))
     {
         if(*list == NULL)
-            *list = create_list(k);
+            *list = create_list_from_file(k);
         else
-            *list = add_node(*list,k);
+            *list = read_node_from_file(*list,k);
     }
     // close file
     fclose (file);
