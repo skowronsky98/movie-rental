@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "node_list.h"
 
@@ -124,13 +125,14 @@ struct list_node_rental *delete_node_rental(struct list_node_rental *list_pointe
     return list_pointer;
 }
 
+
 void print_list_rental(struct list_node_rental *list_pointer)
 {
     while(list_pointer) {
-        printf("\nid klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d\n",
+        printf("\nid klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d",
                 list_pointer->id_client, list_pointer->id_movie, list_pointer->day,
                 list_pointer->month, list_pointer->year,list_pointer->day_r,
-               list_pointer->month_r, list_pointer->year_r );
+               list_pointer->month_r, list_pointer->year_r);
         list_pointer=list_pointer->next;
     }
     puts("");
@@ -175,6 +177,97 @@ int print_node_rental(struct list_node_rental *list_pointer, int id)
     return -1;
 }
 
+
+struct Date
+{
+    int d, m, y;
+};
+
+const int monthDays[12] = {31, 28, 31, 30, 31, 30,
+                           31, 31, 30, 31, 30, 31};
+
+int countLeapYears(struct Date d)
+{
+    int years = d.y;
+
+    if (d.m <= 2)
+        years--;
+
+    return years / 4 - years / 100 + years / 400;
+}
+
+
+int getDifference(struct Date dt1, struct Date dt2)
+{
+    long int n1 = dt1.y*365 + dt1.d;
+
+    for (int i=0; i<dt1.m - 1; i++)
+        n1 += monthDays[i];
+
+
+    n1 += countLeapYears(dt1);
+
+    long int n2 = dt2.y*365 + dt2.d;
+    for (int i=0; i<dt2.m - 1; i++)
+        n2 += monthDays[i];
+    n2 += countLeapYears(dt2);
+    return (n2 - n1);
+}
+
+
+void calculate_fee(struct list_node_rental *rental){
+
+    while (rental)
+    {
+
+        if(rental->day_r == 0) {
+
+            int a_day, a_month, a_year;
+            time_t now;
+            time(&now);
+
+            struct tm *local = localtime(&now);
+
+            a_day = local->tm_mday;
+            a_month = local->tm_mon + 1;
+            a_year = local->tm_year + 1900;
+
+            struct Date dt1 = {rental->day, rental->month, rental->year};
+            struct Date dt2 = {a_day, a_month, a_year};
+
+            int fee = getDifference(dt1, dt2);
+
+
+                printf("\nid klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d"
+                       ,
+                       rental->id_client, rental->id_movie, rental->day,
+                       rental->month, rental->year,rental->day_r,
+                       rental->month_r, rental->year_r);
+                if (fee > 30) printf("| Kara %dzl",fee-30);
+                else printf("| Kara 0zl");
+        }
+        else {
+            struct Date dt3 = {rental->day, rental->month, rental->year};
+            struct Date dt4 = {rental->day_r, rental->month_r, rental->year_r};
+
+            int fee = getDifference(dt3, dt4);
+
+            printf("\nid klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d"
+                    ,
+                   rental->id_client, rental->id_movie, rental->day,
+                   rental->month, rental->year,rental->day_r,
+                   rental->month_r, rental->year_r);
+            if (fee > 30) printf("| Kara %dzl",fee-30);
+            else printf("| Kara 0zl");
+        }
+        rental = rental->next;
+    }
+
+    puts("\n");
+
+}
+
+
 void remove_list_rental(struct list_node_rental **list_pointer)
 {
     while(*list_pointer) {
@@ -199,9 +292,14 @@ void edit_list_rental(FILE *file, struct list_node_rental **list_pointer, int id
         k.month = list_pointer_temp->month;
         k.year = list_pointer_temp->year;
 
-        k.day_r = 1;
-        k.month_r = 1;
-        k.year_r = 1;
+        printf("Podaj dzien oddania: ");
+        scanf("%d",&k.day_r);
+
+        printf("Podaj miesiac oddania: ");
+        scanf("%d",&k.month_r);
+
+        printf("Podaj rok oddania: ");
+        scanf("%d",&k.year_r);
 
         *list_pointer = delete_node_rental(*list_pointer,id);
 

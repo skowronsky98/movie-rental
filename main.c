@@ -132,9 +132,13 @@ int main()
                 break;
 
             case 13:
-                printf("Podaj id clienta ktory oddal ksiazke: ");
+                printf("Podaj id clienta ktory oddal film: ");
                 scanf("%d",&editrental);
                 edit_list_rental(file_rental,&list_rental,editrental,list_rental);
+                break;
+
+            case 14:
+                calculate_fee(list_rental);
                 break;
 
             case 15:

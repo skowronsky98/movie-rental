@@ -100,8 +100,7 @@ void readDataRental(FILE *file,struct list_node_rental **list);
 void deleteRental(FILE *file,struct list_node_rental **list);
 void overwriteRental(FILE *file, struct list_node_rental **list);
 void edit_list_rental(FILE *file, struct list_node_rental **, int, struct list_node_rental *);
-
-
+void calculate_fee(struct list_node_rental *);
 
 
 #endif //PPPROJEKT_NODE_LIST_H

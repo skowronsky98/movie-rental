@@ -51,9 +51,14 @@ void addRental(FILE *file, struct list_node_rental **list, struct list_node *lis
         scanf("%d",&d.id_movie);
     }
 
-    d.day = 0;
-    d.month = 0;
-    d.year = 0;
+    printf("Podaj dzien wypozyczenia: ");
+    scanf("%d",&d.day);
+
+    printf("Podaj miesiac wypozyczenia: ");
+    scanf("%d",&d.month);
+
+    printf("Podaj rok wypozyczenia: ");
+    scanf("%d",&d.year);
 
     d.day_r = 0;
     d.month_r = 0;
