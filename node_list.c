@@ -202,16 +202,16 @@ struct list_node *read_node_from_file(struct list_node *list_pointer, struct kli
     return list_pointer;
 }
 
-bool check_id(struct list_node *list_pointer, int id)
+int check_id(struct list_node *list_pointer, int id)
 {
     while (list_pointer)
     {
         if(list_pointer->numer_karty == id)
-            return false;
+            return 1;
 
         list_pointer = list_pointer->next;
     }
-    return true;
+    return -1;
 }
 
 void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *list_pointer_temp)
@@ -237,7 +237,7 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
                 printf("Podaj nowy nr karty: ");
                 scanf("%d",&tmp_int);
 
-                while (check_id(*list_pointer,tmp_int) == false)
+                while (check_id(*list_pointer,tmp_int) == 1)
                 {
                     printf("\nNumer karty juz istnieje podaj nowy nr karty: ");
                     scanf("%d",&tmp_int);
@@ -292,7 +292,7 @@ int print_node(struct list_node *list_pointer, int id)
     return -1;
 }
 
-void quicksort(struct list_node *number[],int first,int last){
+/*void quicksort(struct list_node *number[],int first,int last){
     int i, j, pivot;
     struct list_node* temp;
     if(first<last){
@@ -319,8 +319,9 @@ void quicksort(struct list_node *number[],int first,int last){
         quicksort(number,j+1,last);
 
     }
-}
+}*/
 
+/*
 int count_list(struct list_node *node)
 {
     int count = 0;
@@ -331,7 +332,9 @@ int count_list(struct list_node *node)
     }
     return count;
 }
+*/
 
+/*
 void sort_by_phone_number(struct list_node *node)
 {
     if(node)
@@ -354,9 +357,7 @@ void sort_by_phone_number(struct list_node *node)
             print_node(arr[j],arr[j]->numer_karty);
     }
 }
-
-
-
+*/
 
 void remove_list(struct list_node **list_pointer)
 {

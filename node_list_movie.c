@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
 #include "node_list.h"
 
 struct list_node_movie {
@@ -407,6 +409,17 @@ void sort_by_name(struct list_node_movie *node){
     }
 }
 
+int check_id_movie(struct list_node_movie *list_pointer, int id)
+{
+    while (list_pointer)
+    {
+        if(list_pointer->id_filmu == id)
+            return 1;
+
+        list_pointer = list_pointer->next;
+    }
+    return -1;
+}
 
 void remove_list_movie(struct list_node_movie **list_pointer)
 {

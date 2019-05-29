@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "node_list.h"
 
@@ -14,7 +15,11 @@ int main()
     struct list_node_movie *list_movie = NULL;
     readDataFilmy(file_filmy,&list_movie);
 
-    int operacja,editklient,editmovie,fieldklient,fieldmovie;
+    FILE *file_rental;
+    struct list_node_rental *list_rental = NULL;
+    readDataRental(file_rental,&list_rental);
+
+    int operacja,editklient,editmovie,editrental,fieldklient,fieldmovie;
 
     while(operacja != 0) {
         printf("Spis tresci:\n");
@@ -27,7 +32,11 @@ int main()
         printf("7. Edytuj film\n");
         printf("8. Wypisz liste filmow\n");
         printf("9. Sortuj filmy\n");
-        printf("10. Szukaj filmu\n");
+        printf("10. Szukaj filmu\n\n");
+        printf("11. Dodaj wypozyczenie\n");
+        printf("12. Usun z listy wypo\n");
+        printf("13. Oddal film\n");
+        printf("15. Wyswietl liste wypo\n");
         printf("0 - Koniec programu\n\n");
         printf("Wybor: ");
         scanf("%d", &operacja);
@@ -106,12 +115,32 @@ int main()
                 break;
             case 10:
                 printf("Podaj tyttul filmu: ");
-                char pattern[] = {NULL};
+                char pattern[] = {0};
                 scanf(" %[^\n]s",pattern);
 
                 search_movie(pattern, list_movie);
 
                 break;
+
+            case 11:
+                addRental(file_rental, &list_rental,list,list_movie);
+
+                break;
+
+            case 12:
+                deleteRental(file_rental,&list_rental);
+                break;
+
+            case 13:
+                printf("Podaj id clienta ktory oddal ksiazke: ");
+                scanf("%d",&editrental);
+                edit_list_rental(file_rental,&list_rental,editrental,list_rental);
+                break;
+
+            case 15:
+                print_list_rental(list_rental);
+                break;
+
             case 0:
                 printf("\nKoniec programu");
                 break;
@@ -122,6 +151,7 @@ int main()
     }
     remove_list(&list);
     remove_list_movie(&list_movie);
+    remove_list_rental(&list_rental);
 
     return 0;
 }

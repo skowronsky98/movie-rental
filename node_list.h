@@ -25,6 +25,7 @@ int print_node(struct list_node *, int);
 struct list_node *create_list_from_file(struct klienci);
 struct list_node *read_node_from_file(struct list_node *, struct klienci);
 int last_index(struct list_node *);
+int check_id(struct list_node *list_pointer, int id);
 
 
 
@@ -71,4 +72,36 @@ void search_movie(char[], struct list_node_movie *);
 
 
 void sort_by_name(struct list_node_movie *);
+int check_id_movie(struct list_node_movie *list_pointer, int id);
+
+
+
+struct rental {
+    int id_client;
+    int id_movie;
+    int day;
+    int month;
+    int year;
+    int day_r;
+    int month_r;
+    int year_r;
+};
+
+extern struct list_node_rental *create_list_rental(struct rental);
+extern struct list_node_rental *add_node_rental(struct list_node_rental*,struct rental);
+extern struct list_node_rental *delete_node_rental(struct list_node_rental*, int);
+void print_list_rental(struct list_node_rental *);
+void remove_list_rental(struct list_node_rental **);
+void add_list_rental_to_file(FILE *file, struct list_node_rental *);
+int print_node_rental(struct list_node_rental *, int);
+
+void addRental(FILE *file, struct list_node_rental **list, struct list_node *,struct list_node_movie *);
+void readDataRental(FILE *file,struct list_node_rental **list);
+void deleteRental(FILE *file,struct list_node_rental **list);
+void overwriteRental(FILE *file, struct list_node_rental **list);
+void edit_list_rental(FILE *file, struct list_node_rental **, int, struct list_node_rental *);
+
+
+
+
 #endif //PPPROJEKT_NODE_LIST_H
