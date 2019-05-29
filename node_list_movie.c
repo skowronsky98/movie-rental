@@ -162,7 +162,7 @@ int print_node_movie(struct list_node_movie *list_pointer, int id)
 
     if(list_pointer)
     {
-        printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s | l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+        printf("id filmu: %d \t| tytul: %s \t| rok: %d \t| rezyser: %s \t| gatunek: %s \t| l.egzemplarzy: %d \t| l.wypozyczonych: %d \n",
                list_pointer->id_filmu,list_pointer->tytul,list_pointer->rok,list_pointer->rezyser,list_pointer->gatunek,list_pointer->liczba_egzemplarzy,list_pointer->liczba_wypozyczonych);
 
         return 1;
@@ -246,8 +246,8 @@ void search_movie(char pattern[], struct list_node_movie *list_pointer)
     {
         if(strstr(list_pointer->tytul,pattern))
         {
-            printf("id filmu: %d | tytul: %s | rok: %d | rezyser: %s | gatunek: %s "
-                     "| l.egzemplarzy: %d | l.wypozyczonych: %d \n",
+            printf("id filmu: %d \t| tytul: %s \t| rok: %d \t| rezyser: %s \t| gatunek: %s \t"
+                     "| l.egzemplarzy: %d \t| l.wypozyczonych: %d \n",
                    list_pointer->id_filmu,list_pointer->tytul,list_pointer->rok,
                    list_pointer->rezyser,list_pointer->gatunek,list_pointer->liczba_egzemplarzy,
                    list_pointer->liczba_wypozyczonych);

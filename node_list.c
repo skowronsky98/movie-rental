@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "node_list.h"
 
@@ -126,8 +127,6 @@ struct list_node *create_list_from_file(struct klienci client)
     struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
 
     if(first) {
-
-        printf("\nid: %d \n",client.numer_karty);
         first->numer_karty = client.numer_karty;
         strcpy(first->imie,client.imie);
         strcpy(first->nazwisko,client.nazwisko);
@@ -203,6 +202,17 @@ struct list_node *read_node_from_file(struct list_node *list_pointer, struct kli
     return list_pointer;
 }
 
+bool check_id(struct list_node *list_pointer, int id)
+{
+    while (list_pointer)
+    {
+        if(list_pointer->numer_karty == id)
+            return false;
+
+        list_pointer = list_pointer->next;
+    }
+    return true;
+}
 
 void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *list_pointer_temp)
 {
@@ -226,7 +236,13 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
             case 1:
                 printf("Podaj nowy nr karty: ");
                 scanf("%d",&tmp_int);
-                k.numer_karty = tmp_int;
+
+                while (check_id(*list_pointer,tmp_int) == false)
+                {
+                    printf("\nNumer karty juz istnieje podaj nowy nr karty: ");
+                    scanf("%d",&tmp_int);
+                }
+                    k.numer_karty = tmp_int;
                 break;
             case 2:
                 printf("Podaj nowe imie: ");
