@@ -36,6 +36,7 @@ int main()
         printf("11. Dodaj wypozyczenie\n");
         printf("12. Usun z listy wypo\n");
         printf("13. Oddal film\n");
+        printf("14. Wyswietl liste kar\n");
         printf("15. Wyswietl liste wypo\n");
         printf("0 - Koniec programu\n\n");
         printf("Wybor: ");
@@ -61,6 +62,7 @@ int main()
                     printf("3: Nazwisko\n");
                     printf("4: Numer Telefonu\n");
                     printf("5: Email\n");
+                    printf("0: Cofnij\n");
                     printf("Wybor: ");
 
                     scanf("%d",&fieldklient);
@@ -97,6 +99,7 @@ int main()
                     printf("5: Gatunek\n");
                     printf("6: Liczba egzemplarzy\n");
                     printf("7: Liczba wypozyczonych\n");
+                    printf("0: Cofnij\n");
                     printf("Wybor: ");
                     scanf("%d",&fieldmovie);
 

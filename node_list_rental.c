@@ -128,34 +128,44 @@ struct list_node_rental *delete_node_rental(struct list_node_rental *list_pointe
 
 void print_list_rental(struct list_node_rental *list_pointer)
 {
+    puts("");
     while(list_pointer) {
-        printf("\nid klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d",
+        printf("id klienta: %d\t| id filmu: %d\t| data wypozyczenia: %d.%d.%d\t| data oddania: %d.%d.%d\n",
                 list_pointer->id_client, list_pointer->id_movie, list_pointer->day,
                 list_pointer->month, list_pointer->year,list_pointer->day_r,
                list_pointer->month_r, list_pointer->year_r);
-        list_pointer=list_pointer->next;
+
+        list_pointer = list_pointer->next;
     }
     puts("");
 }
 
 void add_list_rental_to_file(FILE *file, struct list_node_rental *list_pointer)
 {
-    struct rental rental;
-
+    struct rental r;
     while(list_pointer) {
-        rental.id_client = list_pointer->id_client;
-        rental.id_movie = list_pointer->id_movie;
-        rental.day = list_pointer->day;
-        rental.month = list_pointer->month;
-        rental.year = list_pointer->year;
+        r.id_client = list_pointer->id_client;
+        r.id_movie = list_pointer->id_movie;
+        r.day = list_pointer->day;
+        r.month = list_pointer->month;
+        r.year = list_pointer->year;
 
-        fwrite (&rental, sizeof(struct rental), 1, file);
+        r.day_r = list_pointer->day_r;
+        r.month_r = list_pointer->month_r;
+        r.year_r = list_pointer->year_r;
 
-        list_pointer=list_pointer->next;
+        fwrite (&r, sizeof(struct rental), 1, file);
 
-        fclose (file);
+        if(fwrite == 0)
+            printf("Tarapaty");
+
+        list_pointer = list_pointer->next;
+
+       // fclose (file);
 
     }
+
+
 }
 
 int print_node_rental(struct list_node_rental *list_pointer, int id)

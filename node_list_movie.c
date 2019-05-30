@@ -151,7 +151,7 @@ void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
 
         list_pointer=list_pointer->next;
 
-        fclose (file);
+     //   fclose (file);
 
     }
 }
