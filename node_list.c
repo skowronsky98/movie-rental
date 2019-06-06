@@ -8,14 +8,14 @@
 
 #include "node_list.h"
 
-/*! brief Struktura klientow*/
+/*! brief Lista Struktura klientow*/
 struct list_node {
     int numer_karty; /*!< Pole z numerem karty */
     char imie[27]; /*!< Pole zawierajaca imie*/
     char nazwisko[27]; /*!< Pole zawierajace nazwisko */
     int numer_telefonu; /*!< Pole z nr tekefonu */
     char email[50]; /*!< Pole zawierajace email */
-    struct list_node *next; /*!< Wskaznik na nastepny element struktury klienci */
+    struct list_node *next; /*!< Wskaznik na nastepny element listy struktury klienci */
 };
 
 /*! \brief Funkcja tworzy nowa liste kleintow

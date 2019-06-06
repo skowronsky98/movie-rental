@@ -5,7 +5,7 @@
 
 #include "node_list.h"
 
-/*! brief Struktura wypozyczen*/
+/*! brief Lista Struktury wypozyczen*/
 struct list_node_rental{
     int id_client; /*!< Pole z id klienta */
     int id_movie; /*!< Pole z id filmu */
@@ -247,7 +247,9 @@ int print_node_rental(struct list_node_rental *list_pointer, int id)
 /*! brief Struktura Daty*/
 struct Date
 {
-    int d, m, y;
+    int d; /*!< Pole dla zapisania dnia */
+    int m; /*!< Pole dla zapisania miesiaca */
+    int y; /*!< Pole dla zapisania roku */
 };
 
 /*! brief Tablica z dniami danego miesiaca*/

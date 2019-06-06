@@ -5,12 +5,13 @@
 #ifndef PPPROJEKT_NODE_LIST_H
 #define PPPROJEKT_NODE_LIST_H
 
+/*! brief Struktura klientow*/
 struct klienci {
-    int numer_karty;
-    char imie[27];
-    char nazwisko[27];
-    int numer_telefonu;
-    char email[50];
+    int numer_karty; /*!< Pole z numerem karty */
+    char imie[27]; /*!< Pole zawierajaca imie*/
+    char nazwisko[27]; /*!< Pole zawierajace nazwisko */
+    int numer_telefonu; /*!< Pole z nr tekefonu */
+    char email[50]; /*!< Pole zawierajace email */
 };
 
 struct list_node;
@@ -39,15 +40,15 @@ void overwriteKlienci(FILE *file, struct list_node **list_pointer);
 void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *);
 void sort_by_phone_number(struct list_node *);
 
-
+/*! brief Struktura filmow*/
 struct filmy {
-    int id_filmu;
-    char tytul[27];
-    int rok;
-    char rezyser[27];
-    char gatunek[27];
-    int liczba_egzemplarzy;
-    int liczba_wypozyczonych;
+    int id_filmu; /*!< Pole z id filmu */
+    char tytul[27]; /*!< Pole zawierajace tytul */
+    int rok; /*!< Pole przechowujace rok produkcji filmu */
+    char rezyser[27]; /*!< Pole zawierajace imie rezysera */
+    char gatunek[27]; /*!< Pole zawierajace gatunek filmu */
+    int liczba_egzemplarzy; /*!< Pole przechowujace ilosc egzemplarzy */
+    int liczba_wypozyczonych; /*!< Pole przechowujace ilosc egzemplarzy wypozyczonych */
 };
 
 
@@ -75,16 +76,16 @@ void sort_by_name(struct list_node_movie *);
 int check_id_movie(struct list_node_movie *list_pointer, int id);
 
 
-
+/*! brief Struktura wypozyczen*/
 struct rental {
-    int id_client;
-    int id_movie;
-    int day;
-    int month;
-    int year;
-    int day_r;
-    int month_r;
-    int year_r;
+    int id_client; /*!< Pole z id klienta */
+    int id_movie; /*!< Pole z id filmu */
+    int day; /*!< Pole zawierajace dzien wypozyczenia */
+    int month; /*!< Pole zawierajace miesiac wypozyczenia */
+    int year; /*!< Pole zawierajace rok wypozyczenia */
+    int day_r; /*!< Pole zawierajace dzien oddania */
+    int month_r; /*!< Pole zawierajace miesiac oddania */
+    int year_r; /*!< Pole zawierajace rok oddania */
 };
 
 extern struct list_node_rental *create_list_rental(struct rental);
@@ -94,6 +95,10 @@ void print_list_rental(struct list_node_rental *);
 void remove_list_rental(struct list_node_rental **);
 void add_list_rental_to_file(FILE *file, struct list_node_rental *);
 int print_node_rental(struct list_node_rental *, int);
+
+
+
+
 
 void addRental(FILE *file, struct list_node_rental **list, struct list_node *,struct list_node_movie *);
 void readDataRental(FILE *file,struct list_node_rental **list);

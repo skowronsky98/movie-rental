@@ -8,7 +8,7 @@
 
 #include "node_list.h"
 
-/*! brief Struktura filmow*/
+/*! brief Lista Struktury filmow*/
 struct list_node_movie {
     int id_filmu; /*!< Pole z id filmu */
     char tytul[27]; /*!< Pole zawierajace tytul */
