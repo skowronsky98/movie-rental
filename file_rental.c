@@ -75,16 +75,16 @@ void overwriteRental(FILE *file, struct list_node_rental **list){
 
     if (file == NULL)
     {
-        fprintf(stderr, "\nError opend file\n");
+        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
         exit (1);
     }
 
     add_list_rental_to_file(file,*list);
 
     if(fwrite != 0)
-        printf("contents to file overwritten successfully !\n");
+        printf("Zapisano poprawnie do pliku!\n");
     else
-        printf("error overwriting file !\n");
+        printf("Blad podczas zapisywania do pliku!\n");
 
     // close file
     fclose (file);
@@ -106,7 +106,7 @@ void readDataRental(FILE *file,struct list_node_rental **list){
 
     if (file == NULL)
     {
-        fprintf(stderr, "\nError opening file\n");
+        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
         exit (1);
     }
 

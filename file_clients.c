@@ -22,7 +22,7 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 
     if (file == NULL)
     {
-        fprintf(stderr, "\nError opend file\n");
+        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
         exit (1);
     }
     // write struct to file
@@ -30,9 +30,9 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 
 
     if(fwrite != 0)
-        printf("contents to file written successfully !\n");
+        printf("Poprawnie zapisano dane!\n\n");
     else
-        printf("error writing file !\n");
+        printf("Blad podczas zapisywania danych!\n");
 
     // close file
     fclose (file);
@@ -65,16 +65,16 @@ void overwriteKlienci(FILE *file, struct list_node **list_pointer){
 
     if (file == NULL)
     {
-        fprintf(stderr, "\nError opend file\n");
+        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
         exit (1);
     }
 
     add_list_to_file(file,*list_pointer);
 
     if(fwrite != 0)
-        printf("contents to file overwritten successfully !\n");
+        printf("Zapisano poprawnie do pliku!\n");
     else
-        printf("error overwriting file !\n");
+        printf("Blad podczas zapisywania do pliku!\n");
 
     // close file
     fclose (file);
@@ -97,7 +97,7 @@ void readDataKlienci(FILE *file, struct list_node **list){
 
     if (file == NULL)
     {
-        fprintf(stderr, "\nError opening file\n");
+        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
         exit (1);
     }
 
