@@ -5,6 +5,10 @@
 
 #include "node_list.h"
 
+/*! \brief Funkcja zapisujaca dane wypozyczen do pliku
+*         Parametry to struktura wypozyczen, sciezka do pliku oraz wskaznik na liste z wypozyczeniami
+*
+*/
 void saveDataRental(struct rental d, FILE *file, struct list_node_rental **list){
 
     file = fopen("rental.dat","a+");
@@ -31,6 +35,10 @@ void saveDataRental(struct rental d, FILE *file, struct list_node_rental **list)
     fclose (file);
 }
 
+/*! \brief Funkcja dodajace wypozyczenie
+*         Parametry to sciezka do pliku, wskaznik na liste z wypozyczeniami, wskaznik na liste z klientami oraz wskaznik na liste z filmami
+*
+*/
 void addRental(FILE *file, struct list_node_rental **list, struct list_node *list_client, struct list_node_movie *list_movie){
 
     struct rental d;
@@ -67,6 +75,10 @@ void addRental(FILE *file, struct list_node_rental **list, struct list_node *lis
     saveDataRental(d,file,list);
 }
 
+/*! \brief Funkcja nadpisujaca zawartosc pliku z wypozyczeniami
+*         Parametry to sciezka do pliku oraz wskaznik na liste z wypozyczeniami
+*
+*/
 void overwriteRental(FILE *file, struct list_node_rental **list){
 
     int status = remove("rental.dat");
@@ -90,6 +102,11 @@ void overwriteRental(FILE *file, struct list_node_rental **list){
     fclose (file);
 }
 
+/*! \brief Funkcja usuwajaca wskazane wypozyczenie
+*         Parametry to sciezka do pliku oraz wskaznik na liste z wypozyczeniami
+*
+*\n Funkcja pyta o numer klienta do usuniecia a nastepnie nadpisuje zawartosc pliku po usunieciu
+*/
 void deleteRental(FILE *file,struct list_node_rental **list){
 
     int id_num=0;
@@ -99,6 +116,10 @@ void deleteRental(FILE *file,struct list_node_rental **list){
     overwriteRental(file,list);
 }
 
+/*! \brief Funkcja odczytujaca dane z wypozyczeniami
+*         Parametry funkcji to sciezka do pliku oraz wskaznik na liste z wypozyczeniami
+*
+*/
 void readDataRental(FILE *file,struct list_node_rental **list){
 
     struct rental f;

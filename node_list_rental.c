@@ -5,18 +5,24 @@
 
 #include "node_list.h"
 
+/*! brief Struktura wypozyczen*/
 struct list_node_rental{
-    int id_client;
-    int id_movie;
-    int day;
-    int month;
-    int year;
-    int day_r;
-    int month_r;
-    int year_r;
-    struct list_node_rental *next;
+    int id_client; /*!< Pole z id klienta */
+    int id_movie; /*!< Pole z id filmu */
+    int day; /*!< Pole zawierajace dzien wypozyczenia */
+    int month; /*!< Pole zawierajace miesiac wypozyczenia */
+    int year; /*!< Pole zawierajace rok wypozyczenia */
+    int day_r; /*!< Pole zawierajace dzien oddania */
+    int month_r; /*!< Pole zawierajace miesiac oddania */
+    int year_r; /*!< Pole zawierajace rok oddania */
+    struct list_node_rental *next; /*!< Wskaznik na nastepny element struktury wypozyczen */
 };
 
+/*! \brief Funkcja tworzy nowa liste wypozyczen
+*         Parametrem jest struktura wypozyczen
+*
+\return Zwraca wskaznik na pierwszy element listy wypozyczen
+*/
 struct list_node_rental *create_list_rental(struct rental rental)
 {
     struct list_node_rental *first = (struct list_node_rental *) malloc(sizeof(struct list_node_rental));
@@ -37,12 +43,22 @@ struct list_node_rental *create_list_rental(struct rental rental)
     return first;
 }
 
+/*! \brief Funkcja dodaje wypozyczenie na przod listy z wypozyczeniami
+*         Parametry to wskaznik na liste z wypozyczeniami oraz nowy wezel wypozyczen
+*
+\return Zwraca nowy wezel
+*/
 struct list_node_rental *add_at_front_rental(struct list_node_rental *list_pointer, struct list_node_rental *new_node)
 {
     new_node->next = list_pointer;
     return new_node;
 }
 
+/*! \brief Funkcja szuka miejsca dla wypozyczenia w liscie wypozyczen
+*         Parametry to wskaznik na liste z wypozyczen oraz id klienta
+*
+\return Po znalezieniu miejsca dla wypozyczenia zwraca wskaznik na poprzedni element listy
+*/
 struct list_node_rental *find_spot_rental(struct list_node_rental *list_pointer, int id)
 {
     struct list_node_rental *previous = NULL;
@@ -54,12 +70,21 @@ struct list_node_rental *find_spot_rental(struct list_node_rental *list_pointer,
     return previous;
 }
 
+/*! \brief Funkcja dodaje element w wyznaczone miejsce
+*         Parametrami sa wskazniki na ostatni element listy wypozyczen oraz nowy element listy wypozyczen
+*
+*/
 void add_in_middle_or_at_back_rental(struct list_node_rental *node, struct list_node_rental *new_node)
 {
     new_node->next = node->next;
     node->next = new_node;
 }
 
+/*! \brief Funkcja dodaje nowe wypozyczenie do listy z wypozyczeniami
+*         Parametry to wskaznik na liste oraz struktura wypozyczenia
+*
+\return Po dodaniu nowego elementu funkcja zwraca wskaznik na liste z wypozyczeniami
+*/
 struct list_node_rental *add_node_rental(struct list_node_rental *list_pointer, struct rental rental)
 {
     struct list_node_rental *new_node = (struct list_node_rental *) malloc(sizeof(struct list_node_rental));
@@ -86,6 +111,11 @@ struct list_node_rental *add_node_rental(struct list_node_rental *list_pointer, 
     return list_pointer;
 }
 
+/*! \brief Funkcja usuwa wypozyczenie z brzegu
+*         Parametrem jest wskaznik na liste z wypozyczeniami
+*
+\return Funkcja usuwa element i zwraca wskaznik na nastepne pole usunietego elementu
+*/
 struct list_node_rental *delete_at_front_rental(struct list_node_rental *list_pointer)
 {
     struct list_node_rental *next = list_pointer->next;
@@ -93,6 +123,11 @@ struct list_node_rental *delete_at_front_rental(struct list_node_rental *list_po
     return next;
 }
 
+/*! \brief Funkcja szuka elementu przed wskazanym
+*         Parametry to wskaznik na liste z wypozyczeniami oraz id klienta
+*
+\return Zwraca wskaznik na poprzedni element
+*/
 struct list_node_rental *find_previous_node_rental (struct list_node_rental *list_pointer, int id)
 {
     struct list_node_rental *previous = NULL;
@@ -103,6 +138,11 @@ struct list_node_rental *find_previous_node_rental (struct list_node_rental *lis
     return previous;
 }
 
+/*! \brief Funkcja usuwajaca element ze srodka lub znajdujacy sie na koncu
+*         Parametrem jest wskaznik na element do usuniecia
+*
+*\n Funkcja przeszukuje liste a nastepnie wskazany usuwa element
+*/
 void delete_middle_or_last_node_rental(struct list_node_rental *previous)
 {
     struct list_node_rental *node = previous->next;
@@ -112,6 +152,11 @@ void delete_middle_or_last_node_rental(struct list_node_rental *previous)
     }
 }
 
+/*! \brief Funkcja szuka i usuwa wskazany element
+*         Parametry to wskaznik na liste wypozyczen oraz wybrane id klienta
+*
+\return Po usunieciu elementu zwraca wskaznik na liste wypozyczen
+*/
 struct list_node_rental *delete_node_rental(struct list_node_rental *list_pointer, int id)
 {
     if(list_pointer) {
@@ -125,7 +170,10 @@ struct list_node_rental *delete_node_rental(struct list_node_rental *list_pointe
     return list_pointer;
 }
 
-
+/*! \brief Funkcja wypisuje zawartosc listy wypozyczen
+*         Parametrem jest wskaznik na liste z wypozyczeniami
+*
+*/
 void print_list_rental(struct list_node_rental *list_pointer)
 {
     puts("");
@@ -140,6 +188,10 @@ void print_list_rental(struct list_node_rental *list_pointer)
     puts("");
 }
 
+/*! \brief Funkcja dodaje liste wypozyczen do pliku
+*         Parametry to sciezka do pliku oraz wskaznik na liste z wypozyczeniami
+*
+*/
 void add_list_rental_to_file(FILE *file, struct list_node_rental *list_pointer)
 {
     struct rental r;
@@ -168,6 +220,11 @@ void add_list_rental_to_file(FILE *file, struct list_node_rental *list_pointer)
 
 }
 
+/*! \brief Funkcja szuka i wypisuje wskazany element wypozyczen
+*         Parametrami sa wskaznik na liste z wypozyczeniami oraz wybrany numer id klienta
+*
+\return Jesli wybrany element znajduje sie w liscie zwraca 1, w przeciwnym razie -1
+*/
 int print_node_rental(struct list_node_rental *list_pointer, int id)
 {
     while(list_pointer && list_pointer->id_client!=id) {
@@ -187,15 +244,21 @@ int print_node_rental(struct list_node_rental *list_pointer, int id)
     return -1;
 }
 
-
+/*! brief Struktura Daty*/
 struct Date
 {
     int d, m, y;
 };
 
+/*! brief Tablica z dniami danego miesiaca*/
 const int monthDays[12] = {31, 28, 31, 30, 31, 30,
                            31, 31, 30, 31, 30, 31};
 
+/*! \brief Funkcja sprawdza czy aktualny rok jest przestepny
+*         Parametrem jest struktura Daty
+*
+\return Zwraca czy wprowadzony rok jest przestepny.
+*/
 int countLeapYears(struct Date d)
 {
     int years = d.y;
@@ -206,7 +269,11 @@ int countLeapYears(struct Date d)
     return years / 4 - years / 100 + years / 400;
 }
 
-
+/*! \brief Funkcja sprawdza roznice pomiedzy datami wypozyczen
+*         Parametrami sa dwie daty, wypozyczenia i oddania lub biezca jesli film nie zostal oddany
+*
+\return Zwraca roznice w dniach pomiedzy datami
+*/
 int getDifference(struct Date dt1, struct Date dt2)
 {
     long int n1 = dt1.y*365 + dt1.d;
@@ -224,7 +291,13 @@ int getDifference(struct Date dt1, struct Date dt2)
     return (n2 - n1);
 }
 
-
+/*! \brief Funkcja obliczajaca ile wynosi kara za dane wypozyczenie
+*         Parametrem jest lista wypozyczen
+*
+*\n Jesli film nie zostal oddany to funkcja oblicza kare dla aktualnej daty
+*\n Jesli film zostal oddany ale wypozyczenie trwalo dluzej niz 30 dni rowniez wylicza kare dla wypozyczenia
+*\n W przypadku wypozyczenia ktore trwalo krocej niz 30 dni nie zostaje naliczana zadna kara
+*/
 void calculate_fee(struct list_node_rental *rental){
 
     while (rental)
@@ -277,7 +350,10 @@ void calculate_fee(struct list_node_rental *rental){
 
 }
 
-
+/*! \brief Funkcja usuwa liste z wypozyczeniami
+*         Parametrem jest wskaznik na wskaznik z liste wypozyczen
+*
+*/
 void remove_list_rental(struct list_node_rental **list_pointer)
 {
     while(*list_pointer) {
@@ -287,6 +363,12 @@ void remove_list_rental(struct list_node_rental **list_pointer)
     }
 }
 
+
+/*! \brief Funkcja edytujaca wskazane wypozyczenie
+*         Parametry to: sciezka do pliku, wskaznik na liste z wypozyczeniami, id klienta oraz tymczasowy wskaznik na liste z wypozyczeniami
+*
+*\n Funkcja szuka czy element istnieje jesli tak to edytuje pole z oddaniem filmu.
+*/
 void edit_list_rental(FILE *file, struct list_node_rental **list_pointer, int id, struct list_node_rental *list_pointer_temp)
 {
 

@@ -8,6 +8,10 @@
 
 #include "node_list.h"
 
+/*! \brief Funkcja zapisujaca dane filmow
+*         Parametry to struktura filmow, sciezka do pliku oraz wskaznik na liste z filmami
+*
+*/
 void saveDataFilmy(struct filmy d, FILE *file, struct list_node_movie **list){
 
     file = fopen("filmy.dat","a+");
@@ -34,6 +38,10 @@ void saveDataFilmy(struct filmy d, FILE *file, struct list_node_movie **list){
     fclose (file);
 }
 
+/*! \brief Funkcja dodajace nowy film
+*         Parametry to sciezka do pliku oraz wskaznik na liste z filmami
+*
+*/
 void addMovie(FILE *file, struct list_node_movie **list){
 
     struct filmy d;
@@ -55,6 +63,10 @@ void addMovie(FILE *file, struct list_node_movie **list){
     saveDataFilmy(d,file,list);
 }
 
+/*! \brief Funkcja nadpisujaca zawartosc pliku z filmami
+*         Parametry to sciezka do pliku oraz wskaznik na liste z filmu
+*
+*/
 void overwriteFilmy(FILE *file, struct list_node_movie **list){
 
     int status = remove("filmy.dat");
@@ -78,7 +90,11 @@ void overwriteFilmy(FILE *file, struct list_node_movie **list){
     fclose (file);
 }
 
-
+/*! \brief Funkcja usuwajaca wskazany film
+*         Parametry to sciezka do pliku oraz wskaznik na liste z filmami
+*
+*\n Funkcja pyta o numer filmu do usuniecia a nastepnie nadpisuje zawartosc pliku po usunieciu
+*/
 void deleteFilmy(FILE *file,struct list_node_movie **list){
 
     int id_num=0;
@@ -88,7 +104,10 @@ void deleteFilmy(FILE *file,struct list_node_movie **list){
     overwriteFilmy(file,list);
 }
 
-
+/*! \brief Funkcja odczytujaca dane z filmami
+*         Parametry funkcji to sciezka do pliku oraz wskaznik na liste z filmami
+*
+*/
 void readDataFilmy(FILE *file,struct list_node_movie **list){
 
     struct filmy f;

@@ -8,15 +8,21 @@
 
 #include "node_list.h"
 
+/*! brief Struktura klientow*/
 struct list_node {
-    int numer_karty;
-    char imie[27];
-    char nazwisko[27];
-    int numer_telefonu;
-    char email[50];
-    struct list_node *next;
+    int numer_karty; /*!< Pole z numerem karty */
+    char imie[27]; /*!< Pole zawierajaca imie*/
+    char nazwisko[27]; /*!< Pole zawierajace nazwisko */
+    int numer_telefonu; /*!< Pole z nr tekefonu */
+    char email[50]; /*!< Pole zawierajace email */
+    struct list_node *next; /*!< Wskaznik na nastepny element struktury klienci */
 };
 
+/*! \brief Funkcja tworzy nowa liste kleintow
+*         Parametrem jest struktura klientow
+*
+\return Zwraca wskaznik na pierwszy element listy klientow
+*/
 struct list_node *create_list(struct klienci client)
 {
     struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
@@ -32,6 +38,11 @@ struct list_node *create_list(struct klienci client)
     return first;
 }
 
+/*! \brief Funkcja sprawdza ostatni index numeru karty
+*         Parametrem jest lista klientow
+*
+\return Zwraca numer ostatniego indeksu
+*/
 int last_index(struct list_node *list_pointer)
 {
     int index = 0;
@@ -44,6 +55,11 @@ int last_index(struct list_node *list_pointer)
     return index;
 }
 
+/*! \brief Funkcja szuka ostatnie miejsce w liscie klientow
+*         Parametrem jest wskaznik na liste z klientami
+*
+\return Po znalezieniu miejsca dla filmu zwraca wskaznik na ostatni element
+*/
 struct list_node *find_last_spot(struct list_node *list_pointer)
 {
     while(list_pointer->next) {
@@ -52,6 +68,11 @@ struct list_node *find_last_spot(struct list_node *list_pointer)
     return list_pointer;
 }
 
+/*! \brief Funkcja dodaje nowy film do listy z klientami
+*         Parametry to wskaznik na liste oraz struktura klienci
+*
+\return Po dodaniu nowego elementu funkcja zwraca wskaznik na liste z klientami
+*/
 struct list_node *add_node(struct list_node *list_pointer, struct klienci client)
 {
     struct list_node *new_node = (struct list_node *) malloc(sizeof(struct list_node));
@@ -73,6 +94,11 @@ struct list_node *add_node(struct list_node *list_pointer, struct klienci client
     return list_pointer;
 }
 
+/*! \brief Funkcja usuwa klienta z brzegu
+*         Parametrem jest wskaznik na liste z klientami
+*
+\return Funkcja usuwa element i zwraca wskaznik na nastepne pole usunietego elementu
+*/
 struct list_node *delete_at_front(struct list_node *list_pointer)
 {
     struct list_node *next = list_pointer->next;
@@ -80,6 +106,11 @@ struct list_node *delete_at_front(struct list_node *list_pointer)
     return next;
 }
 
+/*! \brief Funkcja szuka elementu przed wskazanym
+*         Parametry to wskaznik na liste z klientami oraz numer karty
+*
+\return Zwraca wskaznik na poprzedni element
+*/
 struct list_node *find_previous_node (struct list_node *list_pointer, int card)
 {
     struct list_node *previous = NULL;
@@ -90,6 +121,11 @@ struct list_node *find_previous_node (struct list_node *list_pointer, int card)
     return previous;
 }
 
+/*! \brief Funkcja usuwajaca element ze srodka lub znajdujacy sie na koncu
+*         Parametrem jest wskaznik na element do usuniecia
+*
+*\n Funkcja przeszukuje liste a nastepnie wskazany usuwa element
+*/
 void delete_middle_or_last_node(struct list_node *previous)
 {
     struct list_node *node = previous->next;
@@ -99,6 +135,11 @@ void delete_middle_or_last_node(struct list_node *previous)
     }
 }
 
+/*! \brief Funkcja szuka i usuwa wskazany element
+*         Parametry to wskaznik na liste klientow oraz wybrany numer karty
+*
+\return Po usunieciu elementu zwraca wskaznik na liste klientow
+*/
 struct list_node *delete_node(struct list_node *list_pointer, int card)
 {
     if(list_pointer) {
@@ -112,6 +153,10 @@ struct list_node *delete_node(struct list_node *list_pointer, int card)
     return list_pointer;
 }
 
+/*! \brief Funkcja wypisuje zawartosc listy klientow
+*         Parametrem jest wskaznik na liste z klientami
+*
+*/
 void print_list(struct list_node *list_pointer)
 {
     puts("");
@@ -122,6 +167,10 @@ void print_list(struct list_node *list_pointer)
     puts("");
 }
 
+/*! \brief Funkcja tworzy liste z pliku
+*         Parametrem jest struktura klientow
+*
+*/
 struct list_node *create_list_from_file(struct klienci client)
 {
     struct list_node *first = (struct list_node *)malloc(sizeof(struct list_node));
@@ -137,6 +186,10 @@ struct list_node *create_list_from_file(struct klienci client)
     return first;
 }
 
+/*! \brief Funkcja zapisuje liste do pliku
+*         Parametry to sciezka do pliku oraz wskaznik na liste z klientami
+*
+*/
 void add_list_to_file(FILE *file, struct list_node *list_pointer)
 {
     struct klienci k;
@@ -155,12 +208,22 @@ void add_list_to_file(FILE *file, struct list_node *list_pointer)
     }
 }
 
+/*! \brief Funkcja dodaje element z brzegu
+*         Parametry to wskazniki na liste z klientami oraz nowy element
+*
+\return Funkcja zwraca wskaznik na nowy element
+*/
 struct list_node *add_at_front(struct list_node *list_pointer, struct list_node *new_node)
 {
     new_node->next = list_pointer;
     return new_node;
 }
 
+/*! \brief Funkcja szuka miejsca dla elementu
+*         Parametry to wskaznik na liste z klientami oraz numer karty
+*
+\return Funkcja zwraca wskaznik na odpowiednie miejsce
+*/
 struct list_node *find_spot(struct list_node *list_pointer, char card)
 {
     struct list_node *previous = NULL;
@@ -172,12 +235,21 @@ struct list_node *find_spot(struct list_node *list_pointer, char card)
     return previous;
 }
 
+/*! \brief Funkcja dodaje element w srodku lub na koncu
+*         Parametry to wskaznik sprawdzany element oraz nowy element
+*
+*/
 void add_in_middle_or_at_back(struct list_node *node, struct list_node *new_node)
 {
     new_node->next = node->next;
     node->next = new_node;
 }
 
+/*! \brief Funkcja wczytuje elementy i zapisuje do listy
+*         Parametry to wskaznik na lizte z klientami oraz struktura klienci
+*
+\return Zwraca wskaznik na liste
+*/
 struct list_node *read_node_from_file(struct list_node *list_pointer, struct klienci client)
 {
     struct list_node *new_node = (struct list_node *) malloc(sizeof(struct list_node));
@@ -202,6 +274,11 @@ struct list_node *read_node_from_file(struct list_node *list_pointer, struct kli
     return list_pointer;
 }
 
+/*! \brief Funkcja sprawdzajaca czy istnieje dany klient
+*         Parametrami sa wskaznik na liste klientow oraz wybrany numer karty
+*
+\return Zwraca 1 jesli klient z podanym numerem istnieje, w przeciwnym wypadku -1
+*/
 int check_id(struct list_node *list_pointer, int id)
 {
     while (list_pointer)
@@ -213,7 +290,11 @@ int check_id(struct list_node *list_pointer, int id)
     }
     return -1;
 }
-
+/*! \brief Funkcja edytuje liste z klientami
+*         Parametry to sciezka do pliku, wskaznik na liste z klientami, pole ktore chcemy edytowac oraz tymczasowy wskaznik na liste
+*
+*\n Funkcja szuka czy element istnieje jesli tak to edytuje wskazane pole.
+*/
 void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, struct list_node *list_pointer_temp)
 {
 
@@ -276,7 +357,11 @@ void edit_list(FILE *file, struct list_node **list_pointer, int id, int field, s
 
 }
 
-
+/*! \brief Funkcja wypisuje wskazane pole
+*         Parametry to wskaznik na liste z klientami oraz numer karty
+*
+\return Zwraca 1 jesli klient o podanym numerze istnieje, w przecywinym wypadku -1
+*/
 int print_node(struct list_node *list_pointer, int id)
 {
     puts("");
@@ -292,19 +377,12 @@ int print_node(struct list_node *list_pointer, int id)
     return -1;
 }
 
-/*
-int count_list(struct list_node *node)
-{
-    int count = 0;
-    while (node)
-    {
-        count++;
-        node = node->next;
-    }
-    return count;
-}
-*/
 
+
+/*! \brief Funkcja usuwa liste z klientami
+*         Parametrem jest wskaznik na wskaznik z lista klientow
+*
+*/
 void remove_list(struct list_node **list_pointer)
 {
     while(*list_pointer) {

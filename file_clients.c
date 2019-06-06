@@ -8,6 +8,10 @@
 
 #include "node_list.h"
 
+/*! \brief Funkcja zapisuje dane Klientow
+*         Parametrami funkcji jest struktura klientow, sciezka do pliku oraz wskaznik na liste klientow
+*
+*/
 void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
 
     // add element to list
@@ -38,6 +42,11 @@ void saveDataKlienci(struct klienci d,FILE *file, struct list_node **list){
     fclose (file);
 }
 
+/*! \brief Funkcja dodaje nowego klienta
+*         Parametrami funkcji jest sciezka do pliku oraz wskaznik na liste klientow
+*
+*\n Funkcja po podaniu danych klienta korzysta z funkcji zapisujacej dane klienta do pliku.
+*/
 void addClient(FILE *file, struct list_node **list){
 
     struct klienci d;
@@ -57,7 +66,11 @@ void addClient(FILE *file, struct list_node **list){
 }
 
 
-
+/*! \brief Funkcja nadpisuje plik z klientami
+*         Parametrami funkcji jest sciezka do pliku klientow oraz wskaznik na liste z klientami
+*
+*\n Funkcja wykorzystywana jest podczas usuwania klientow.
+*/
 void overwriteKlienci(FILE *file, struct list_node **list_pointer){
 
     int status = remove("klienci.dat");
@@ -80,7 +93,11 @@ void overwriteKlienci(FILE *file, struct list_node **list_pointer){
     fclose (file);
 }
 
-
+/*! \brief Funkcja usuwa klienta
+*         Parametrami funkcji jest sciezka do pliku klientow oraz wskaznik na liste z klientami
+*
+*\n Funkcja po usunieciu klienta wykorzystuje funkcje nadpisujaca plik z danymi klientow
+*/
 void deleteKlienci(FILE *file,struct list_node **list){
 
     int id_num=0;
@@ -90,6 +107,11 @@ void deleteKlienci(FILE *file,struct list_node **list){
     overwriteKlienci(file,list);
 }
 
+/*! \brief Funkcja odczytuje dane klientow z pliku
+*         Parametry funkcji to sciezka do pliku klientow oraz wskaznik na liste z klientami
+*
+*\n Funkcja sprawdza czy plik zostal poprawnie otwarty, jesli nie wyswietla jednoznaczny komunikat
+*/
 void readDataKlienci(FILE *file, struct list_node **list){
 
     struct klienci k;

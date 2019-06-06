@@ -8,17 +8,23 @@
 
 #include "node_list.h"
 
+/*! brief Struktura filmow*/
 struct list_node_movie {
-    int id_filmu;
-    char tytul[27];
-    int rok;
-    char rezyser[27];
-    char gatunek[27];
-    int liczba_egzemplarzy;
-    int liczba_wypozyczonych;
-    struct list_node_movie *next;
+    int id_filmu; /*!< Pole z id filmu */
+    char tytul[27]; /*!< Pole zawierajace tytul */
+    int rok; /*!< Pole przechowujace rok produkcji filmu */
+    char rezyser[27]; /*!< Pole zawierajace imie rezysera */
+    char gatunek[27]; /*!< Pole zawierajace gatunek filmu */
+    int liczba_egzemplarzy; /*!< Pole przechowujace ilosc egzemplarzy */
+    int liczba_wypozyczonych; /*!< Pole przechowujace ilosc egzemplarzy wypozyczonych */
+    struct list_node_movie *next; /*!< Wskaznik na nastepny element struktury filmy */
 };
 
+/*! \brief Funkcja tworzy nowa liste filmow
+*         Parametrem jest struktura filmow
+*
+\return Zwraca wskaznik na pierwszy element listy filmow
+*/
 struct list_node_movie *create_list_movie(struct filmy movie)
 {
     struct list_node_movie *first = (struct list_node_movie *) malloc(sizeof(struct list_node_movie));
@@ -36,12 +42,22 @@ struct list_node_movie *create_list_movie(struct filmy movie)
     return first;
 }
 
+/*! \brief Funkcja dodaje film na przod listy z filmami
+*         Parametry to wskaznik na liste z filmami oraz nowy wezel filmow
+*
+\return Zwraca nowy wezel
+*/
 struct list_node_movie *add_at_front_movie(struct list_node_movie *list_pointer, struct list_node_movie *new_node)
 {
     new_node->next = list_pointer;
     return new_node;
 }
 
+/*! \brief Funkcja szuka miejsca dla filmu w liscie filmow
+*         Parametry to wskaznik na liste z filmami oraz id filmu
+*
+\return Po znalezieniu miejsca dla filmu zwraca wskaznik na poprzedni element listy
+*/
 struct list_node_movie *find_spot_movie(struct list_node_movie *list_pointer, int id)
 {
     struct list_node_movie *previous = NULL;
@@ -53,12 +69,23 @@ struct list_node_movie *find_spot_movie(struct list_node_movie *list_pointer, in
     return previous;
 }
 
+
+/*! \brief Funkcja dodaje element w wyznaczone miejsce
+*         Parametrami sa wskazniki na ostatni element listy filmy oraz nowy element listy filmy
+*
+*/
 void add_in_middle_or_at_back_movie(struct list_node_movie *node, struct list_node_movie *new_node)
 {
     new_node->next = node->next;
     node->next = new_node;
 }
 
+
+/*! \brief Funkcja dodaje nowy film do listy z filmami
+*         Parametry to wskaznik na liste oraz struktura filmy
+*
+\return Po dodaniu nowego elementu funkcja zwraca wskaznik na liste z filmami
+*/
 struct list_node_movie *add_node_movie(struct list_node_movie *list_pointer, struct filmy movie)
 {
     struct list_node_movie *new_node = (struct list_node_movie *) malloc(sizeof(struct list_node_movie));
@@ -84,6 +111,11 @@ struct list_node_movie *add_node_movie(struct list_node_movie *list_pointer, str
     return list_pointer;
 }
 
+/*! \brief Funkcja usuwa film z brzegu
+*         Parametrem jest wskaznik na liste z filmami
+*
+\return Funkcja usuwa element i zwraca wskaznik na nastepne pole usunietego elementu
+*/
 struct list_node_movie *delete_at_front_movie(struct list_node_movie *list_pointer)
 {
     struct list_node_movie *next = list_pointer->next;
@@ -91,6 +123,11 @@ struct list_node_movie *delete_at_front_movie(struct list_node_movie *list_point
     return next;
 }
 
+/*! \brief Funkcja szuka elementu przed wskazanym
+*         Parametry to wskaznik na liste z filmami oraz id filmu
+*
+\return Zwraca wskaznik na poprzedni element
+*/
 struct list_node_movie *find_previous_node_movie (struct list_node_movie *list_pointer, int id)
 {
     struct list_node_movie *previous = NULL;
@@ -101,6 +138,11 @@ struct list_node_movie *find_previous_node_movie (struct list_node_movie *list_p
     return previous;
 }
 
+/*! \brief Funkcja usuwajaca element ze srodka lub znajdujacy sie na koncu
+*         Parametrem jest wskaznik na element do usuniecia
+*
+*\n Funkcja przeszukuje liste a nastepnie wskazany usuwa element
+*/
 void delete_middle_or_last_node_movie(struct list_node_movie *previous)
 {
     struct list_node_movie *node = previous->next;
@@ -110,6 +152,11 @@ void delete_middle_or_last_node_movie(struct list_node_movie *previous)
     }
 }
 
+/*! \brief Funkcja szuka i usuwa wskazany element
+*         Parametry to wskaznik na liste filmow oraz wybrane id filmu
+*
+\return Po usunieciu elementu zwraca wskaznik na liste filmow
+*/
 struct list_node_movie *delete_node_movie(struct list_node_movie *list_pointer, int id)
 {
     if(list_pointer) {
@@ -123,6 +170,10 @@ struct list_node_movie *delete_node_movie(struct list_node_movie *list_pointer, 
     return list_pointer;
 }
 
+/*! \brief Funkcja wypisuje zawartosc listy filmow
+*         Parametrem jest wskaznik na liste z filmami
+*
+*/
 void print_list_movie(struct list_node_movie *list_pointer)
 {
     while(list_pointer) {
@@ -133,6 +184,11 @@ void print_list_movie(struct list_node_movie *list_pointer)
     puts("");
 }
 
+
+/*! \brief Funkcja dodaje liste filmow do pliku
+*         Parametry to sciezka do pliku oraz wskaznik na liste z filmami
+*
+*/
 void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
 {
 
@@ -156,6 +212,12 @@ void add_list_movie_to_file(FILE *file, struct list_node_movie *list_pointer)
     }
 }
 
+
+/*! \brief Funkcja szuka i wypisuje wskazany element
+*         Parametrami sa wskaznik na liste z filmami oraz wybrane id filmu
+*
+\return Jesli wybrany element znajduje sie w liscie zwraca 1, w przeciwnym razie -1
+*/
 int print_node_movie(struct list_node_movie *list_pointer, int id)
 {
     while(list_pointer && list_pointer->id_filmu!=id) {
@@ -173,6 +235,11 @@ int print_node_movie(struct list_node_movie *list_pointer, int id)
     return -1;
 }
 
+/*! \brief Funkcja edytujaca wskazany film
+*         Parametry to: sciezka do pliku, wskaznik na liste z filmami, id filmu, pole ktore chcemy edytowac oraz tymczasowy wskaznik na liste z filmami
+*
+*\n Funkcja szuka czy element istnieje jesli tak to edytuje wskazane pole.
+*/
 void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, int field, struct list_node_movie *list_pointer_temp)
 {
 
@@ -242,6 +309,11 @@ void edit_list_movie(FILE *file, struct list_node_movie **list_pointer, int id, 
 
 }
 
+/*! \brief Funkcja szuka wskazanego filmu
+*         Parametrem jest szukany wzor oraz wskaznik na liste z filmami
+*
+*\n Funkcja szuka czy istnieja tytuly z podanym ciagiem, jesli tak to wypisuje informacje na ich temat
+*/
 void search_movie(char pattern[], struct list_node_movie *list_pointer)
 {
     while (list_pointer)
@@ -258,6 +330,11 @@ void search_movie(char pattern[], struct list_node_movie *list_pointer)
     }
 }
 
+/*! \brief Funkcja liczaca ilosc elementow w liscie filmy
+*         Parametrem jest wskaznik na pierwszy element listy
+*
+\return Zwraca ilosc filmow w liscie
+*/
 int count_list_movie(struct list_node_movie *node)
 {
     int count = 0;
@@ -269,25 +346,44 @@ int count_list_movie(struct list_node_movie *node)
     return count;
 }
 
-
+/*! \brief Komparator do szybkiego sortowania dla tytulow
+*         Parametrami sa 2 pola do porownania jako tytuly
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int comparator_tytul(const void* p, const void* q)
 {
     return strcasecmp(((struct list_node_movie*)p)->tytul,
                   ((struct list_node_movie*)q)->tytul);
 }
 
+/*! \brief Komparator do szybkiego sortowania dla rezyserow
+*         Parametrami sa 2 pola do porownania jako rezyserzy
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int comparator_rezyser(const void* p, const void* q)
 {
     return strcasecmp(((struct list_node_movie*)p)->rezyser,
                   ((struct list_node_movie*)q)->rezyser);
 }
 
+/*! \brief Komparator do szybkiego sortowania dla gatunkow
+*         Parametrami sa 2 pola do porownania jako gatunki
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int comparator_gatunek(const void* p, const void* q)
 {
     return strcasecmp(((struct list_node_movie*)p)->gatunek,
                   ((struct list_node_movie*)q)->gatunek);
 }
 
+/*! \brief Komparator do szybkiego sortowania dla roku produkcji
+*         Parametrami sa 2 pola do porownania jako rok produkcji
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int compare_rok(const void * a, const void * b)
 {
 
@@ -297,6 +393,11 @@ int compare_rok(const void * a, const void * b)
     return ( orderA->rok - orderB->rok );
 }
 
+/*! \brief Komparator do szybkiego sortowania dla id filmu
+*         Parametrami sa 2 pola do porownania jako id filmu
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int compare_idfilmu(const void * a, const void * b)
 {
 
@@ -306,6 +407,11 @@ int compare_idfilmu(const void * a, const void * b)
     return ( orderA->id_filmu - orderB->id_filmu );
 }
 
+/*! \brief Komparator do szybkiego sortowania dla liczby wypozyczonych filmow
+*         Parametrami sa 2 pola do porownania jako liczba wypozyczonych filmow
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int compare_wypozyczenia(const void * a, const void * b)
 {
 
@@ -315,6 +421,11 @@ int compare_wypozyczenia(const void * a, const void * b)
     return ( orderA->liczba_wypozyczonych - orderB->liczba_wypozyczonych );
 }
 
+/*! \brief Komparator do szybkiego sortowania dla ilosci egzemplarzy
+*         Parametrami sa 2 pola do porownania jako ilosc egzemplarzy
+*
+\return Zwraca czy porownywane pola sa wieksze, mniejsze lub rowne od siebie
+*/
 int compare_egzemplarze(const void * a, const void * b)
 {
 
@@ -324,6 +435,13 @@ int compare_egzemplarze(const void * a, const void * b)
     return ( orderA->liczba_egzemplarzy - orderB->liczba_egzemplarzy );
 }
 
+/*! \brief Funkcja sortujaca filmy
+*         Parametrem jest wskaznik na liste z filmami
+*
+*\n Funkcja pyta uzytkownika po ktorym polu chce posortować
+*\n Nastepnie pyta czy chce posortowac rosnaco lub malejaco
+*\n Podczas sortowania funkcja korzysta z wbudowanej funkcji qsort (stdlib.h) i z wczesniej zaimplementowanych komperatorow
+*/
 void sort_by_name(struct list_node_movie *node){
     const int length = count_list_movie(node);
     struct list_node_movie *arr[length];
@@ -409,6 +527,12 @@ void sort_by_name(struct list_node_movie *node){
     }
 }
 
+
+/*! \brief Funkcja sprawdzajaca czy istnieje dany film
+*         Parametrami sa wskaznik na liste filmow oraz wybrane id filmu
+*
+\return Zwraca 1 jesli film z podanym id istnieje, w przeciwnym wypadku -1
+*/
 int check_id_movie(struct list_node_movie *list_pointer, int id)
 {
     while (list_pointer)
@@ -421,6 +545,10 @@ int check_id_movie(struct list_node_movie *list_pointer, int id)
     return -1;
 }
 
+/*! \brief Funkcja usuwa liste z filmami
+*         Parametrem jest wskaznik na wskaznik z liste filmow
+*
+*/
 void remove_list_movie(struct list_node_movie **list_pointer)
 {
     while(*list_pointer) {
