@@ -272,19 +272,19 @@ int count_list_movie(struct list_node_movie *node)
 
 int comparator_tytul(const void* p, const void* q)
 {
-    return strcmp(((struct list_node_movie*)p)->tytul,
+    return strcasecmp(((struct list_node_movie*)p)->tytul,
                   ((struct list_node_movie*)q)->tytul);
 }
 
 int comparator_rezyser(const void* p, const void* q)
 {
-    return strcmp(((struct list_node_movie*)p)->rezyser,
+    return strcasecmp(((struct list_node_movie*)p)->rezyser,
                   ((struct list_node_movie*)q)->rezyser);
 }
 
 int comparator_gatunek(const void* p, const void* q)
 {
-    return strcmp(((struct list_node_movie*)p)->gatunek,
+    return strcasecmp(((struct list_node_movie*)p)->gatunek,
                   ((struct list_node_movie*)q)->gatunek);
 }
 
