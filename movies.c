@@ -114,8 +114,24 @@ void readDataFilmy(FILE *file,struct list_node_movie **list){
     file = fopen("filmy.dat","r");
 
     if (file == NULL){
-        fprintf(stderr, "\nBlad podczas otwierania pliku filmy\n");
-        exit (1);
+        //create file
+        file = fopen ("filmy.dat", "w");
+
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
+        fclose (file);
+
+        file = fopen ("filmy.dat", "r");
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
     }
 
     // read file contents till end of file

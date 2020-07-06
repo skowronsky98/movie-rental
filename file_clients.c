@@ -117,10 +117,25 @@ void readDataKlienci(FILE *file, struct list_node **list){
     struct klienci k;
     file = fopen ("klienci.dat", "r");
 
-    if (file == NULL)
-    {
-        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
-        exit (1);
+    if (file == NULL){
+        //create file
+        file = fopen ("klienci.dat", "w");
+
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
+        fclose (file);
+
+        file = fopen ("klienci.dat", "r");
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
     }
 
     // read file contents till end of file

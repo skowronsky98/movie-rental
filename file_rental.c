@@ -125,10 +125,25 @@ void readDataRental(FILE *file,struct list_node_rental **list){
     struct rental f;
     file = fopen("rental.dat","r");
 
-    if (file == NULL)
-    {
-        fprintf(stderr, "\nBlad podczas otwierania pliku\n");
-        exit (1);
+    if (file == NULL){
+        //create file
+        file = fopen ("rental.dat", "w");
+
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
+        fclose (file);
+
+        file = fopen ("rental.dat", "r");
+
+        if (file == NULL){
+            fprintf(stderr, "\nBlad podczas otwierania pliku\n");
+            exit (1);
+        }
+
     }
 
     // read file contents till end of file
