@@ -20,7 +20,7 @@ int main()
     readDataRental(file_rental,&list_rental);
 
     int operacja,editklient,editmovie,editrental,fieldklient,fieldmovie;
-    int menu;
+    int menu = 1;
     while (menu != 0 ){
         printf("Spis tresci:\n");
         printf("1. Klienci\n");
